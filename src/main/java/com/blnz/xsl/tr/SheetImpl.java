@@ -1189,6 +1189,15 @@ class SheetImpl
 	return (String)namespaceAliasTable.get(ns);
     }
 
+    /**
+     *
+     */
+    public NodeExtensionFactory getExtensionFactory()
+    {
+        return null;
+    }
+
+
     /////////////////////////////////////////////////////////////
     //
     // internal class definitions

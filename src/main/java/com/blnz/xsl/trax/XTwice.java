@@ -1,5 +1,3 @@
-// $Id: XTwice.java 98 2005-02-28 21:37:10Z blindsey $
-
 package com.blnz.xsl.trax;
 
 import org.xml.sax.*;

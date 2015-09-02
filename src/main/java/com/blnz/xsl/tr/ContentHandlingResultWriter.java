@@ -13,8 +13,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.InputSource;
 import org.xml.sax.Attributes;
 
-import com.blnz.xsl.sax2.MultiNamespaceResult;
-
 /**
  * Converts a SAX 2 event stream to calls on a Result -- which
  * is useful for connecting to extension elements

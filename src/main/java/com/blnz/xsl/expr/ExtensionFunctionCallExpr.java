@@ -1,4 +1,3 @@
-// $Id: ExtensionFunctionCallExpr.java 109 2005-03-28 20:53:12Z blindsey $
 
 package com.blnz.xsl.expr;
 

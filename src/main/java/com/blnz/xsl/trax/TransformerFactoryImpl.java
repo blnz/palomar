@@ -1,3 +1,5 @@
+// $Id: TransformerFactoryImpl.java 98 2005-02-28 21:37:10Z blindsey $
+
 package com.blnz.xsl.trax;
 
 import java.io.StringReader;
@@ -168,13 +170,13 @@ public class TransformerFactoryImpl extends SAXTransformerFactory
                 String parserClassName =
                     System.getProperty("com.blnz.xsl.trax.reader");
                 if (parserClassName == null) {
-                    parserClassName = System.getProperty("com.blnz.xsl.sax2.parser");
+                    parserClassName = System.getProperty("com.blnz.xsl.sax.parser");
                 }
                 if (parserClassName == null) {
                     parserClassName = System.getProperty("org.xml.sax.parser");
                 }
                 if (parserClassName == null) {
-                    parserClassName = "com.jclark.xml.sax.CommentDriver";
+                    parserClassName = "com.blnz.xml.sax.CommentDriver";
                 }
                 _readerClass = Class.forName(parserClassName);
             }

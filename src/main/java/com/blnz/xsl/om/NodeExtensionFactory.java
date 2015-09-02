@@ -13,5 +13,5 @@ public interface NodeExtensionFactory
      * Returns an element which may be specialized to support application
      * specific behaviors as associated with the specified namespace.
      */
-    public NodeExtension createElementEx (String uri, String tag);
+    public NodeExtension createElementEx (String namespaceURI, String tag);
 }

@@ -1,5 +1,3 @@
-// $Id: NodeSetFunction.java 116 2005-03-29 00:57:07Z blindsey $
-
 package com.blnz.xsl.expr;
 
 import com.blnz.xsl.om.*;

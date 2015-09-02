@@ -1,5 +1,3 @@
-// $Id: XMLProcessorImpl.java 97 2005-02-28 21:18:32Z blindsey $
-
 package com.blnz.xsl.sax2;
 
 import java.net.URL;
@@ -89,7 +87,7 @@ public class XMLProcessorImpl implements XMLProcessorEx
             } else {
                 // System.out.println("XMLProcessorImpl::load(" + source.getSystemID + ") re-using reader ");
             }
-
+            
             // build a (xslt)dom with sax
             SAXTwoOMBuilder builder = 
                 new SAXTwoOMBuilderImpl(context,

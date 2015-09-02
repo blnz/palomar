@@ -1,4 +1,3 @@
-// $Id: ValueIdIterator.java 96 2005-02-28 21:07:29Z blindsey $
 
 package com.blnz.xsl.expr;
 
@@ -6,18 +5,21 @@ import com.blnz.xsl.om.*;
 import java.util.StringTokenizer;
 import java.util.Enumeration;
 
-class ValueIdIterator implements NodeIterator {
+class ValueIdIterator implements NodeIterator 
+{
     private Node node;
     private NodeIterator iter1;
     private NodeIterator iter2;
 
-    ValueIdIterator(Node node, NodeIterator iter1) {
+    ValueIdIterator(Node node, NodeIterator iter1) 
+    {
         this.node = node;
         this.iter1 = iter1;
         this.iter2 = new NullNodeIterator();
     }
 
-    static class Iterator implements NodeIterator {
+    static class Iterator implements NodeIterator 
+    {
         private Node node;
         private Enumeration ids;
         Iterator(Node node, String str) {
@@ -34,7 +36,8 @@ class ValueIdIterator implements NodeIterator {
         }
     }
 
-    public Node next() throws XSLException {
+    public Node next() throws XSLException 
+    {
         for (;;) {
             Node tem = iter2.next();
             if (tem != null)

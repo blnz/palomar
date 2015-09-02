@@ -1,8 +1,7 @@
-// $Id: LoadContext.java 99 2005-02-28 21:37:53Z blindsey $
-
 package com.blnz.xsl.tr;
 
 import com.blnz.xsl.om.Name;
+import com.blnz.xsl.om.NodeExtensionFactory;
 
 /**
  * maintains a list of a few options for how a XMLProcessor constructs
@@ -13,20 +12,25 @@ public interface LoadContext
     /**
      * white space handling
      */
-    boolean getStripSource(Name elementTypeName);
+    public boolean getStripSource(Name elementTypeName);
 
     /**
      * include comment nodes?
      */
-    boolean getIncludeComments();
+    public boolean getIncludeComments();
 
     /**
      * include processing instructions?
      */
-    boolean getIncludeProcessingInstructions();
+    public boolean getIncludeProcessingInstructions();
 
     /**
      * are we instrumenting this transformer?
      */
-    ActionDebugTarget getDebugger();
+    public ActionDebugTarget getDebugger();
+
+    /**
+     *
+     */
+    public NodeExtensionFactory getExtensionFactory();
 }

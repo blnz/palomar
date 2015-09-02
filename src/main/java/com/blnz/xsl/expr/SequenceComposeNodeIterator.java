@@ -25,8 +25,9 @@ class SequenceComposeNodeIterator implements NodeIterator
     {
         for (;;) {
             Node node = iter2.next();
-            if (node != null)
+            if (node != null) {
                 return node;
+            }
             node = iter1.next();
             if (node == null)
                 break;

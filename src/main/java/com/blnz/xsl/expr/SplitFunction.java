@@ -2,6 +2,7 @@
 package com.blnz.xsl.expr;
 
 import com.blnz.xsl.om.*;
+import com.blnz.xsl.sax2.*;
 
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;

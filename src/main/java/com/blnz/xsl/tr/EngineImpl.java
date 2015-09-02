@@ -1,9 +1,8 @@
-// $Id: EngineImpl.java 99 2005-02-28 21:37:53Z blindsey $
-
 package com.blnz.xsl.tr;
 
 import com.blnz.xsl.om.Node;
 import com.blnz.xsl.om.Name;
+import com.blnz.xsl.om.NodeExtensionFactory;
 import com.blnz.xsl.om.NameTable;
 import com.blnz.xsl.om.NameTableImpl;
 import com.blnz.xsl.om.XSLException;
@@ -81,4 +80,13 @@ public class EngineImpl extends NameTableImpl
     {
         return _debugger;
     }
+
+    /**
+     *
+     */
+    public NodeExtensionFactory getExtensionFactory()
+    {
+        return null;
+    }
+
 }

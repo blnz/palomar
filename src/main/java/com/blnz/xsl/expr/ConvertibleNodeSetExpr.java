@@ -1,4 +1,3 @@
-// $Id: ConvertibleNodeSetExpr.java 96 2005-02-28 21:07:29Z blindsey $
 
 package com.blnz.xsl.expr;
 
@@ -98,8 +97,9 @@ abstract class ConvertibleNodeSetExpr
         int opt1 = this.getOptimizeFlags();
         int opt2 = expr.getOptimizeFlags();
         if ((opt1 & SINGLE_LEVEL) != 0
-            && (opt2 & STAYS_IN_SUBTREE) != 0)
+            && (opt2 & STAYS_IN_SUBTREE) != 0) {
             return new SequenceComposeExpr(this, expr);
+        }
         return new ComposeExpr(this, expr);
     }
 

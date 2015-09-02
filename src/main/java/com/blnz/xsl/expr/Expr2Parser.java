@@ -1,8 +1,9 @@
-// $Id: ExprParser.java 122 2005-04-05 01:22:51Z blindsey $
 
 package com.blnz.xsl.expr;
 
 import com.blnz.xsl.om.*;
+
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
@@ -64,7 +65,6 @@ public class Expr2Parser extends Expr2Tokenizer
         axisTable.put("attribute", attributeAxis);
         axisTable.put("descendant-or-self", descendantOrSelfAxis);
 
-	// hmmm .. why did we switch from the pre constructed ones?
         axisTable.put("descendant", new DescendantAxisExpr());
 
         axisTable.put("ancestor-or-self", new AncestorOrSelfAxisExpr());
@@ -368,8 +368,10 @@ public class Expr2Parser extends Expr2Tokenizer
         this.locals = locals;
     }
 
+    ////////////////////////////////////////////////////
+    
     //
-    //
+    //  top level of XPATH 2.0
     //
     private ConvertibleExpr parseExpr() throws ParseException 
     {
@@ -396,6 +398,8 @@ public class Expr2Parser extends Expr2Tokenizer
 
         if (currentToken == TOK_COMMA) {
             // make a sequence expression 
+            next();
+            expr = new SequenceComposeExpr(expr.makeNodeSetExpr(), parseSeqExpr().makeNodeSetExpr());
         }
 
         return expr;
@@ -409,6 +413,16 @@ public class Expr2Parser extends Expr2Tokenizer
         switch (currentToken) {
         case TOK_IF_LPAR:
             expr = parseIfExpr();
+            break;
+
+        case TOK_FOR:
+            expr = parseForExpr();   // parseForExpr();
+            break;
+
+
+        case TOK_SOME:
+        case TOK_EVERY:
+            expr = parseQuantifiedExpr();   // parseQuantifiedExpr();
             break;
 
         default:
@@ -428,6 +442,135 @@ public class Expr2Parser extends Expr2Tokenizer
         return new XSLException(e.getMessage(), node);
     }
 
+    //
+    // 
+    //
+    private ConvertibleExpr parseQuantifiedExpr() throws ParseException 
+    {
+
+        try {
+            // System.out.println("parseQuantifiedExpr");
+            // current token is " some "
+            
+            System.out.println("next()._currentTokenValue: " + _currentTokenValue);
+
+            next() ;
+            Name varName = null;
+            ConvertibleExpr varValuesExpr = null;
+            
+            if (currentToken == TOK_VARIABLE_REF) {
+                
+                System.out.println("next()._currentToken: TOK_VARIABLE_REF " + _currentTokenValue);
+                varName = expandName();
+                
+            }
+            next();
+            if (currentToken == TOK_IN) {                
+                System.out.println("next()._currentTokenValue: TOK_IN" + _currentTokenValue);
+       
+            } else { 
+                System.out.println("next()._currentTokenValue:  not!! TOK_IN" + _currentTokenValue);
+
+            }
+            
+//            {
+//                Name name = expandName();
+//                if (locals.contains(name))
+//                    expr = new LocalVariableRefExpr(name);
+//                else
+//                    expr = new GlobalVariableRefExpr(name, node);
+//                break;
+//            }
+
+            
+            next();
+            varValuesExpr = parseExprSingle();
+            
+           //  expectRpar();
+            
+            System.out.println("next()._currentTokenValue (got varValuesExpr, now I want  'satisfies') : " + _currentTokenValue);
+
+            if (currentToken != TOK_SATISFIES) {
+                throw new ParseException("expected 'satisfies' in quantified expression");
+            }
+
+            next();
+            ConvertibleExpr satisfiesExpr = parseExprSingle();
+                        
+            return new QuantifiedExpr(varName, varValuesExpr.makeVariantExpr(), satisfiesExpr.makeVariantExpr());
+            
+        } catch ( ParseException ex) {
+            ex. printStackTrace();
+            throw(ex);
+        }
+    }
+  
+    //
+    // xpath 2.0 production #5     "for" "$" VarName "in" ExprSingle ("," "$" VarName "in" ExprSingle)* "return" ExprSingle
+    //
+    private ConvertibleExpr parseForExpr() throws ParseException 
+    {
+        // 
+        try {
+            // System.out.println("parseForExpr");
+            // current token is " for "
+            
+            System.out.println("next()._currentTokenValue: " + _currentTokenValue);
+
+            next() ;
+            ArrayList<Name> names = new ArrayList<Name>();
+            Name varName = null;
+            ConvertibleExpr varValuesExpr = null;
+            
+            if (currentToken == TOK_VARIABLE_REF) {
+                
+                System.out.println("next()._currentToken: TOK_VARIABLE_REF " + _currentTokenValue);
+                varName = expandName();
+                names.add(varName);
+            }
+            next();
+            while (currentToken == TOK_COMMA) {
+                next() ;
+              
+                if (currentToken == TOK_VARIABLE_REF) {
+                    
+                    System.out.println("next()._currentToken: TOK_VARIABLE_REF " + _currentTokenValue);
+                    varName = expandName();
+                    names.add(varName);
+                    next();
+                }    
+            }
+            
+            if (currentToken == TOK_IN) {                
+                System.out.println("next()._currentTokenValue: TOK_IN" + _currentTokenValue);
+       
+            } else { 
+                System.out.println("next()._currentTokenValue:  not!! TOK_IN" + _currentTokenValue);
+
+            }
+            
+            next();
+            varValuesExpr = parseExprSingle();
+            
+           //  expectRpar();
+            
+            System.out.println("next()._currentTokenValue (got varValuesExpr, now I want  'satisfies') : " + _currentTokenValue);
+
+            if (currentToken != TOK_RETURN) {
+                throw new ParseException("expected 'return' in for expression");
+            }
+
+            next();
+            ConvertibleExpr returnExpr = parseExprSingle();
+                        
+            return new ForExpr(names, varValuesExpr.makeVariantExpr(), returnExpr.makeVariantExpr());
+            
+        } catch ( ParseException ex) {
+            ex. printStackTrace();
+            throw(ex);
+        }
+    }
+  
 
     //
     // 
@@ -478,11 +621,11 @@ public class Expr2Parser extends Expr2Tokenizer
     //
     private ConvertibleExpr parseOrExpr() throws ParseException 
     {
-        ConvertibleExpr expr = parseAndExpr();
+        ConvertibleExpr expr = parseAndExpr2();
         while (currentToken == TOK_OR) {
             next();
             expr = new OrExpr(expr.makeBooleanExpr(),
-                              parseAndExpr().makeBooleanExpr());
+                              parseAndExpr2().makeBooleanExpr());
         }
         return expr;
     }
@@ -501,6 +644,101 @@ public class Expr2Parser extends Expr2Tokenizer
         return expr;
     }
 
+    //
+    // XPath 2 production #9
+    //
+    private ConvertibleExpr parseAndExpr2() throws ParseException 
+    {
+        ConvertibleExpr expr = parseComparisonExpr();
+        while (currentToken == TOK_AND) {
+            next();
+            expr = new AndExpr(expr.makeBooleanExpr(),
+                               parseComparisonExpr().makeBooleanExpr());
+        }
+        return expr;
+    }
+
+    //
+    // XPath 2 Production #10
+    //
+    private ConvertibleExpr parseComparisonExpr() throws ParseException {
+        ConvertibleExpr expr = parseRangeExpr();
+        loop: for (;;) {
+            switch (currentToken) {
+            case TOK_EQUALS:
+                next();
+                expr = makeRelationalExpr(equalsRelation, expr,
+                        parseRangeExpr());
+                break;
+            case TOK_NOT_EQUALS:
+                next();
+                expr = makeRelationalExpr(notEqualsRelation, expr,
+                        parseRangeExpr());
+                break;
+            case TOK_GT:
+                next();
+                expr = makeRelationalExpr(greaterThanRelation, expr,
+                        parseRangeExpr());
+                break;
+
+            case TOK_GTE:
+                next();
+                expr = makeRelationalExpr(greaterThanEqualsRelation, expr,
+                        parseRangeExpr());
+                break;
+
+            case TOK_LT:
+                next();
+                expr = makeRelationalExpr(greaterThanRelation,
+                        parseRangeExpr(), expr);
+                break;
+
+            case TOK_LTE:
+                next();
+                expr = makeRelationalExpr(greaterThanEqualsRelation,
+                        parseRangeExpr(), expr);
+                break;
+
+            case TOK_PRECEDES:
+                next();
+                expr = makeRelationalExpr(greaterThanEqualsRelation,   // FIXME
+                        parseRangeExpr(), expr);
+                break;
+
+            case TOK_FOLLOWS:
+                next();
+                expr = makeRelationalExpr(greaterThanEqualsRelation,   // FIXME
+                        parseRangeExpr(), expr);
+                break;
+
+            case TOK_IS:
+                next();
+                expr = makeRelationalExpr(greaterThanEqualsRelation,   // FIXME
+                        parseRangeExpr(), expr);
+                break;
+
+
+            default:
+                break loop;
+            }
+        }
+        return expr;
+
+    }
+
+    //
+    // XPath 2 Production #10
+    //
+    private ConvertibleExpr parseRangeExpr() throws ParseException 
+    {
+        ConvertibleExpr expr = parseAdditiveExpr().makeVariantExpr();
+        if (currentToken == TOK_TO) {
+            return new RangeExpr(expr.makeVariantExpr(), parseAdditiveExpr().makeVariantExpr());
+        }
+       return expr;
+    }
+
+   
     //
     // XPath Production #23
     //
@@ -579,6 +817,7 @@ public class Expr2Parser extends Expr2Tokenizer
   
     //
     // XPath production #25  AdditiveExpr
+    // XPath 2.0 production 12
     //
     private ConvertibleExpr parseAdditiveExpr() throws ParseException {
         ConvertibleExpr expr = parseMultiplicativeExpr();
@@ -604,30 +843,36 @@ public class Expr2Parser extends Expr2Tokenizer
 
     //
     // XPAth production #26
+    // XPath 2.0 procuction #13
     //
     private ConvertibleExpr parseMultiplicativeExpr() 
         throws ParseException 
     {
         
         // get the first part
-        ConvertibleExpr expr = parseUnaryExpr();
+        ConvertibleExpr expr = parseUnionExpr();
         loop:
         for (;;) {
             switch (currentToken) {
             case TOK_DIV:
                 next();
                 expr = new DivideExpr(expr.makeNumberExpr(),
-                                      parseUnaryExpr().makeNumberExpr());
+                                      parseUnionExpr().makeNumberExpr());
                 break;
             case TOK_MOD:
                 next();
                 expr = new ModuloExpr(expr.makeNumberExpr(),
-                                      parseUnaryExpr().makeNumberExpr());
+                                      parseUnionExpr().makeNumberExpr());
+                break;
+            case TOK_IDIV:
+                next();
+                expr = new DivideExpr(expr.makeNumberExpr(),
+                        parseUnionExpr().makeNumberExpr());
                 break;
             case TOK_MULTIPLY:
                 next();
                 expr = new MultiplyExpr(expr.makeNumberExpr(),
-                                        parseUnaryExpr().makeNumberExpr());
+                                        parseUnionExpr().makeNumberExpr());
                 break;
             default:
                 break loop;
@@ -655,19 +900,139 @@ public class Expr2Parser extends Expr2Tokenizer
     }
 
     //
+    // XPath 2.0 production #20
+    //
+    // we've recognized something which may be a 
+    //    unary operator (-) followed by an expression
+    // or a union expression (or group)
+    // or a path expression
+    //
+    private ConvertibleExpr parseUnaryExpr2() 
+        throws ParseException 
+    {
+        if (currentToken == TOK_MINUS) {
+            next();
+            return new NegateExpr(parseUnaryExpr2().makeNumberExpr());
+        }
+        return parsePathExpr();
+    }
+
+
+    //
     // XPath production #18
+    // XPath 2.0 production #14
     //
     // any expression which may contain alternative
-    // path expressions (separated by the or operator "|")
+    // path expressions (separated by the or operator "|" o2 "union")
     //
+
+
     private ConvertibleExpr parseUnionExpr() throws ParseException 
     {
-        ConvertibleExpr expr = parsePathExpr();
-        while (currentToken == TOK_VBAR) {
+        ConvertibleExpr expr = parseIntersectExceptExpr();
+        while ((currentToken == TOK_VBAR) || (currentToken == TOK_UNION)) {
             next();
             expr = new UnionExpr(expr.makeNodeSetExpr(),
-                                 parsePathExpr().makeNodeSetExpr());
+                                 parseIntersectExceptExpr().makeNodeSetExpr());
         }
+        return expr;
+    }
+
+    // XPath 2.0 production 15
+    private ConvertibleExpr parseIntersectExceptExpr() throws ParseException 
+    {
+        ConvertibleExpr expr = parseInstanceOfExpr();
+        
+        loop:
+        for (;;) {
+            switch (currentToken) {
+            case TOK_INTERSECT:
+                next();
+                expr = new IntersectExpr(expr.makeNodeSetExpr(),
+                                      parseInstanceOfExpr().makeNodeSetExpr());
+                break;
+            case TOK_EXCEPT:
+                next();
+                expr = new ExceptExpr(expr.makeNodeSetExpr(),
+                                      parseInstanceOfExpr().makeNodeSetExpr());
+                break;
+            default:
+                break loop;
+            }
+        }
+        return expr;
+    }
+
+    // XPath 2.0 production 15
+    private ConvertibleExpr parseInstanceOfExpr() throws ParseException 
+    {
+        ConvertibleExpr expr = parseTreatExpr();
+        if (currentToken == TOK_INSTANCE) {
+            next();
+        
+            while (currentToken == TOK_OF) {
+                next();
+            }
+        
+            PathPatternBase ppb = parseSequenceType(false);
+            
+            // FIXME: return new InstanceOfExpr(expr, ppb);
+         }
+        return expr;
+    }
+
+    // XPath 2.0 production 17
+    private ConvertibleExpr parseTreatExpr() throws ParseException 
+    {
+        ConvertibleExpr expr = parseCastableExpr();
+        if (currentToken == TOK_TREAT) {
+            next();
+        
+            while (currentToken == TOK_AS) {
+                next();
+            }
+        
+            PathPatternBase ppb = parseSequenceType(false);
+            
+            // FIXME: return new CastableExpr(expr, ppb);
+         }
+        return expr;
+    }
+
+    // XPath 2.0 production 18
+    private ConvertibleExpr parseCastableExpr() throws ParseException 
+    {
+        ConvertibleExpr expr = parseCastExpr();
+        if (currentToken == TOK_CASTABLE) {
+            next();
+        
+            while (currentToken == TOK_AS) {
+                next();
+            }
+        
+            PathPatternBase ppb = parseSequenceType(false);
+            
+            // FIXME: return new TreatExpr(expr, ppb);
+         }
+        return expr;
+    }
+
+
+    // XPath 2.0 production 19
+    private ConvertibleExpr parseCastExpr() throws ParseException 
+    {
+        ConvertibleExpr expr = parseUnaryExpr2();
+        if (currentToken == TOK_CAST) {
+            next();
+        
+            while (currentToken == TOK_AS) {
+                next();
+            }
+        
+            PathPatternBase ppb = parseSequenceType(false);
+            
+            // FIXME: return new TreatExpr(expr, ppb);
+         }
         return expr;
     }
 
@@ -727,7 +1092,7 @@ public class Expr2Parser extends Expr2Tokenizer
             return expr;
     }
 
-    //
+    // XPath 2.0
     // RelativeLocationPath -- XPath production #3
     //
     private ConvertibleNodeSetExpr parseRelativeLocationPath()
@@ -792,6 +1157,80 @@ public class Expr2Parser extends Expr2Tokenizer
             expectRsqb();
         }
         return axis.makeDocumentOrderExpr(expr);
+    }
+
+    //
+    // XPath Production #7
+    //
+    // Compile a node test for an XPath pattern step,
+    // up to, but not including any predicates
+    //
+    // WDL do not return null, even if the test is vacuous (e.g. "node()"
+    //
+    private PathPatternBase parseSequenceType(boolean isAttributeAxis) 
+        throws ParseException 
+    {
+
+        PathPatternBase nodeTest;
+        switch (currentToken) {
+
+        case TOK_QNAME:
+            if (isAttributeAxis) {
+                nodeTest = new AttributeTest(expandName());
+            } else {
+                nodeTest = new ElementTest(expandName());
+            }
+            break;
+
+        case TOK_STAR:
+            nodeTest = isAttributeAxis ? null : new NodeTypeTest(Node.ELEMENT);
+            break;
+
+        case TOK_NAME_COLON_STAR:
+            if (isAttributeAxis) {
+                nodeTest = new NamespaceAttributeTest(expandPrefix());
+            } else {
+                nodeTest = new NamespaceElementTest(expandPrefix());
+            }
+            break;
+
+        case TOK_PROCESSING_INSTRUCTION_LPAR:
+            next();
+            if (currentToken == TOK_LITERAL) {
+                nodeTest = new ProcessingInstructionTest(expandName());
+                next();
+            }
+            else {
+                nodeTest = new NodeTypeTest(Node.PROCESSING_INSTRUCTION);
+            }
+            expectRpar();
+            return nodeTest;
+
+        case TOK_COMMENT_LPAR:
+            next();
+            expectRpar();
+            return new NodeTypeTest(Node.COMMENT);
+
+            // text()
+        case TOK_TEXT_LPAR:
+            next();
+            expectRpar();
+            return new NodeTypeTest(Node.TEXT);
+
+            // node()
+        case TOK_NODE_LPAR:
+            next();
+            expectRpar();
+            if (isAttributeAxis) {
+                return new NodeTypeTest(Node.ATTRIBUTE);
+            }
+            return new NodeTypeTest(Node.ALLTYPES);
+
+        default:
+            throw new ParseException("expected node test");
+        }
+        next();
+        return nodeTest;
     }
 
     //
@@ -916,9 +1355,10 @@ public class Expr2Parser extends Expr2Tokenizer
             }
 
         case TOK_LPAR:
-            // prod #14
+          
             next();
-            expr = parseOrExpr();
+           // expr = parseOrExpr();
+            expr = parseSeqExpr();
             expectRpar();
             return expr;
 

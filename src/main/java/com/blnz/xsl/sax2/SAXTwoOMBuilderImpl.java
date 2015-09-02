@@ -1,4 +1,3 @@
-// $Id: SAXTwoOMBuilderImpl.java 97 2005-02-28 21:18:32Z blindsey $
 
 package com.blnz.xsl.sax2;
 
@@ -34,6 +33,10 @@ import com.blnz.xsl.tr.LoadContext;
  */
 public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder 
 {
+
+    private static NodeExtension _defaultNodeExtension = new NullNodeExtension();
+    private NodeExtensionFactory _neFactory = null;
+
     char[] _dataBuf = new char[1024];
     int _dataBufUsed = 0;
     RootNodeImpl _rootNode = null;
@@ -77,6 +80,8 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
             _context.getIncludeProcessingInstructions();
         
         _includeComments = _context.getIncludeComments();
+
+        _neFactory = context.getExtensionFactory();
 
         _currentNode = _rootNode = new RootNodeImpl(systemId,
                                                     documentIndex,
@@ -129,17 +134,23 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
         } else {
             preserve = _currentNode.preserveSpace();
         }
+
+        NodeExtension ne = (_neFactory == null) ?  
+            _defaultNodeExtension : 
+            _neFactory.createElementEx(namespaceURI, localName);
+
         try {
             if (preserve) {
                 element = new PreserveElementNodeImpl(namespaceURI, qName, atts, _locator,
-                                                      _currentIndex++, _currentNode, _pendingNamespaces);
+                                                      _currentIndex++, _currentNode, _pendingNamespaces, ne);
             } else {
                 element = new ElementNodeImpl(namespaceURI, qName, atts, _locator,
-                                              _currentIndex++, _currentNode, _pendingNamespaces);
+                                              _currentIndex++, _currentNode, _pendingNamespaces, ne);
             }
         } catch (XSLException e) {
             throw new SAXException(e);
         }
+
         _currentIndex += atts.getLength();
         _currentNode = element;
         _pendingNamespaces.clear();
@@ -402,7 +413,7 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
         public String getSystemId()
         { 
             // CHECKME: is this the right meaning?
-            return getURL().toString();
+            return (getURL() == null) ? "null" : getURL().toString();
         }
         
         public String getPublicId()
@@ -411,7 +422,7 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
 
         public NodeExtension getNodeExtension() 
         {
-            return null;
+            return _defaultNodeExtension;
         }
 
     }
@@ -659,9 +670,12 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
         private Object[] atts;
         private int lineNumber;
         private String systemId;
+        private NodeExtension _nodeExtension;
+
         
         ElementNodeImpl(String namespaceURI, String name, Attributes attList, Locator loc,
-                        int index, ContainerNodeImpl parent, Hashtable namespaces) throws XSLException 
+                        int index, ContainerNodeImpl parent, Hashtable namespaces, NodeExtension ne) 
+            throws XSLException 
         {
             super(index, parent);
             lineNumber = loc.getLineNumber();
@@ -765,7 +779,7 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
                 }
             }
 
-            // again we ensure a mappnig has been provided
+            // again we ensure a mapping has been provided
             int pix = name.indexOf(':');
             if (pix == -1) {
                 if (namespaceURI != null && namespaceURI.length() > 0) {
@@ -778,6 +792,11 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
             }
             
             this.name = nsMap.expandElementTypeName(name, this);
+            this._nodeExtension = ne;
+
+            if (ne != _defaultNodeExtension) {
+                ne.setNode(this);
+            }
         }
         
         public Name getName() 
@@ -860,15 +879,24 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
         {
             return this.equals(getElementWithId(name));
         }
+
+        public NodeExtension getNodeExtension()
+        {
+            return _nodeExtension;
+        }
+
+
+
+
     }
     
     static private class PreserveElementNodeImpl extends ElementNodeImpl 
     {
         PreserveElementNodeImpl(String namespaceURI, String name, Attributes atts, Locator loc,
-                                int index, ContainerNodeImpl parent, Hashtable namespaces)  
+                                int index, ContainerNodeImpl parent, Hashtable namespaces, NodeExtension ne)  
             throws XSLException 
         {
-            super(namespaceURI, name, atts, loc, index, parent, namespaces);
+            super(namespaceURI, name, atts, loc, index, parent, namespaces, ne);
         }
 
         boolean preserveSpace() 

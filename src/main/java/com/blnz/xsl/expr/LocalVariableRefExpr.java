@@ -1,5 +1,3 @@
-// $Id: LocalVariableRefExpr.java 112 2005-03-28 21:39:11Z blindsey $
-
 package com.blnz.xsl.expr;
 
 import com.blnz.xsl.om.*;

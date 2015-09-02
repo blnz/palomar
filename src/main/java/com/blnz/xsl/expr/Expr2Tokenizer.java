@@ -255,7 +255,11 @@ class Expr2Tokenizer
                 if (_exprIndex < _exprLength && _expr.charAt(_exprIndex) == '=') {
                     _exprIndex++;
                     currentToken = TOK_LTE;
+                } else  if (_exprIndex < _exprLength && _expr.charAt(_exprIndex) == '<') {
+                    _exprIndex++;
+                    currentToken = TOK_PRECEDES;
                 }
+
                 else
                     currentToken = TOK_LT;
                 return;
@@ -463,12 +467,17 @@ class Expr2Tokenizer
                         currentToken = TOK_AND;
                     } else if (_currentTokenValue.equals("or")) {
                         currentToken = TOK_OR;
+                    } else if (_currentTokenValue.equals("in")) {
+                        _recognizeOperator = false;
+                        currentToken = TOK_IN;
                     } else if (_currentTokenValue.equals("mod")) {
                         currentToken = TOK_MOD;
                     } else if (_currentTokenValue.equals("then")) {
                         currentToken = TOK_THEN;
                     } else if (_currentTokenValue.equals("else")) {
                         currentToken = TOK_ELSE;
+                    } else if (_currentTokenValue.equals("satisfies")) {
+                        currentToken = TOK_SATISFIES;     
                     } else if (_currentTokenValue.equals("div")) {
                         currentToken = TOK_DIV;
                     } else if (_currentTokenValue.equals("idiv")) {
@@ -494,9 +503,22 @@ class Expr2Tokenizer
                         currentToken = TOK_FUNCTION_LPAR;
                     }
                     _recognizeOperator = false;
-                }
-                else
+                } else if (_currentTokenValue.equals("some")) {
+                    _recognizeOperator = false;
+                    currentToken = TOK_SOME;
+                } else if (_currentTokenValue.equals("every")) {
+                    _recognizeOperator = false;
+                    currentToken = TOK_EVERY;
+                } else if (_currentTokenValue.equals("in")) {
+                    _recognizeOperator = false;
+                    currentToken = TOK_IN;
+                } else if (_currentTokenValue.equals("satisfies")) {
+                    _recognizeOperator = false;
+                    currentToken = TOK_SATISFIES;
+
+                } else {
                     currentToken = TOK_QNAME;
+                }
                 return;
             }
         }
