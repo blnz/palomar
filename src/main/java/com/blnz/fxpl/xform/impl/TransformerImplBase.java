@@ -198,13 +198,12 @@ public class TransformerImplBase implements Transformer
      * <p>This will always fail if the parent is null.</p>
      *
      * @param name The property name.
-     * @param state The requested property value.
+     * @param value The requested property value.
      * @exception org.xml.sax.SAXNotRecognizedException When the
      *            XMLReader does not recognize the property name.
      * @exception org.xml.sax.SAXNotSupportedException When the
      *            XMLReader recognizes the property name but 
      *            cannot set the requested value.
-     * @see org.xml.sax.XMLReader#setProperty
      */
     public void setProperty (String name, Object value)
 	throws SAXNotRecognizedException, SAXNotSupportedException
@@ -273,7 +272,7 @@ public class TransformerImplBase implements Transformer
     /**
      * Set the DTD event handler.
      *
-     * @param resolver The new DTD handler.
+     * @param handler The new DTD handler.
      * @exception java.lang.NullPointerException If the handler
      *            is null.
      * @see org.xml.sax.XMLReader#setDTDHandler
@@ -303,7 +302,7 @@ public class TransformerImplBase implements Transformer
     /**
      * Set the content event handler.
      *
-     * @param resolver The new content handler.
+     * @param handler The new content handler.
      * @exception java.lang.NullPointerException If the handler
      *            is null.
      * @see org.xml.sax.XMLReader#setContentHandler
@@ -333,7 +332,7 @@ public class TransformerImplBase implements Transformer
     /**
      * Set the error event handler.
      *
-     * @param handle The new error handler.
+     * @param handler The new error handler.
      * @exception java.lang.NullPointerException If the handler
      *            is null.
      * @see org.xml.sax.XMLReader#setErrorHandler

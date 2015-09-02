@@ -17,8 +17,8 @@ jar {
 
 
 bintray {
-    user = 'blnz'
-    key = 'a8fcaede855e395604db7398b1df92a80851360e'
+    user = 'user'
+    key = 'key'
     filesSpec {
      from 'build/libs'
      into 'standalone_files/level1'

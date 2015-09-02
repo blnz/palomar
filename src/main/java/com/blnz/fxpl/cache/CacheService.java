@@ -1,5 +1,3 @@
-// $Id$
-
 package com.blnz.fxpl.cache;
 
 import java.util.Vector;
@@ -17,7 +15,7 @@ public interface CacheService
     public Cache getCache(String cacheName);
 
     /**
-     * @returns true if the named cache should notify partners in a cluster of changes
+     * @return true if the named cache should notify partners in a cluster of changes
      */
     public boolean shouldNotify(String cacheName);
 

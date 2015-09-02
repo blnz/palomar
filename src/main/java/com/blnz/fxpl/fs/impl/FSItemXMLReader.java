@@ -43,7 +43,7 @@ public class FSItemXMLReader extends ParserAdapter
     }
 
     /** 
-     *Creates its own input source from the XStoreItem 
+     * Creates its own input source from the XStoreItem 
      *  @param src pass a dummy input source. 
      */
     public void parse(InputSource src) 
@@ -75,7 +75,6 @@ public class FSItemXMLReader extends ParserAdapter
 
     /** 
      * Creates its own input source from the XStoreItem 
-     * @param src pass a dummy string. 
      */
     public void parse(String sysID) 
         throws SAXException,  IOException

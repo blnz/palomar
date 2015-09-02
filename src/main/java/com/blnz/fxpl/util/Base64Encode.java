@@ -1,10 +1,7 @@
-// $Id: Base64Encode.java 46 2004-12-11 00:39:16Z blindsey $
-
 package com.blnz.fxpl.util;
 
 /**
  * Base64 Encoding.
- * @see http://info.internet.isi.edu/in-notes/rfc/files/rfc1521.txt
  */
 public class Base64Encode
 {
@@ -28,29 +25,10 @@ public class Base64Encode
         }
     }
 
-//     /**
-//      * Decodes the given string using the base64-encoding specified in
-//      * RFC-1521 (Section 5.2).
-//      *
-//      * @see http://info.internet.isi.edu/in-notes/rfc/files/rfc1521.txt
-//      * @param string the string to decode.
-//      * @return the decoded string or null if there was a problem decoding
-//      */
-//     public static String decode(String string)
-//     {
-//         byte[] in  = string.getBytes();
-//         byte[] out = decode(in, 0, in.length);
-//         if (out == null) {
-//             return null;
-//         }
-//         return new String(out);
-//     }
-
     /**
      * Decodes the given string using the base64-encoding specified in
      * RFC-1521 (Section 5.2).
      *
-     * @see http://info.internet.isi.edu/in-notes/rfc/files/rfc1521.txt
      * @param string the string to decode.
      * @return the decoded string or null if there was a problem decoding
      */
@@ -64,7 +42,6 @@ public class Base64Encode
      * Decodes the given byte[] using the base64-encoding specified in
      * RFC-1521 (Section 5.2).
      *
-     * @see http://info.internet.isi.edu/in-notes/rfc/files/rfc1521.txt
      * @param  data the base64-encoded data.
      * @param  start the position in the array to start.
      * @param  len the number of bytes to decode.
@@ -129,7 +106,6 @@ public class Base64Encode
      * (This results in a maximum of (57/3)*4 or 76 characters per output
      * line.)
      *
-     * @see http://info.internet.isi.edu/in-notes/rfc/files/rfc1521.txt
      * @param  string data to be base64-encoded.
      * @return the encoded string or null if there was a problem encoding.
      */
@@ -156,7 +132,6 @@ public class Base64Encode
      * (This results in a maximum of (57/3)*4 or 76 characters per output
      * line.)
      *
-     * @see http://info.internet.isi.edu/in-notes/rfc/files/rfc1521.txt
      * @param  data data to be base64-encoded.
      * @param  start the position in the array to start.
      * @param  len the number of bytes to encode.
@@ -177,16 +152,16 @@ public class Base64Encode
         for (; sourceIndex < len-2; sourceIndex += 3) {
             dest[destIndex++] = EncodeMap[(data[sourceIndex] >>> 2) & 077];
             dest[destIndex++] = EncodeMap[(data[sourceIndex+1] >>> 4) & 017 |
-                                         (data[sourceIndex] << 4) & 077];
+                                          (data[sourceIndex] << 4) & 077];
             dest[destIndex++] = EncodeMap[(data[sourceIndex+2] >>> 6) & 003 |
-                                         (data[sourceIndex+1] << 2) & 077];
+                                          (data[sourceIndex+1] << 2) & 077];
             dest[destIndex++] = EncodeMap[data[sourceIndex+2] & 077];
         }
         if (sourceIndex < start+len) {
             dest[destIndex++] = EncodeMap[(data[sourceIndex] >>> 2) & 077];
             if (sourceIndex < start+len-1) {
                 dest[destIndex++] = EncodeMap[(data[sourceIndex+1] >>> 4) & 017 |
-                                             (data[sourceIndex] << 4) & 077];
+                                              (data[sourceIndex] << 4) & 077];
                 dest[destIndex++] = EncodeMap[(data[sourceIndex+1] << 2) & 077];
             }
             else {

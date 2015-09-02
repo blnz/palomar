@@ -55,7 +55,6 @@ public class SecurityServiceImpl implements SecurityService
     /**
      * check the validity of a hash code.
      * @param hash the hash code
-     * @param password password
      * @return a <code>User</code> object if the user is validated, 
      * <code>null</code> if the user is invalid.
      */
@@ -614,7 +613,7 @@ public class SecurityServiceImpl implements SecurityService
 
 
     /**
-     * @param id the group id
+     * @param name the group name
      * @return an object implementing the Group interface given the group name,
      * <code>null</code> if does not exist or error occurs.
      */

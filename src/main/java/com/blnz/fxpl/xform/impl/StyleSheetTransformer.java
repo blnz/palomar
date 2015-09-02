@@ -66,7 +66,7 @@ public class StyleSheetTransformer  extends TransformerImplBase implements Clone
     }
 
     /**
-     * @param a SAX Reader which will produce the events of reading
+     * @param styleReader a SAX Reader which will produce the events of reading
       the stylesheet
      */
     public void setStyleReader(XMLReader styleReader) 

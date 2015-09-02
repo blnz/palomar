@@ -1,5 +1,3 @@
-//$Id: LazyBufferedReaderWriter.java 710 2006-02-23 23:21:24Z upayavira $
-
 package com.blnz.fxpl.util.pipe;
 
 import com.blnz.fxpl.log.Log;
@@ -42,7 +40,7 @@ public class LazyBufferedReaderWriter extends OutputStream
     /**
      * Constructor with the outstream
      *
-     * @param   out   the output stream into which bytes are sent.
+     * @param out the OutputStream to which bytes are sent.
      */
     public LazyBufferedReaderWriter(OutputStream out) 
     {
@@ -57,12 +55,11 @@ public class LazyBufferedReaderWriter extends OutputStream
     {
         setFile(file);
     }
-
     
     /**
      * Constructor with file location paramter and customized buffer size
      * @param file   A file output stream location
-     * @param   size   the buffer size.
+     * @param buffSize   the buffer size.
      */
     public LazyBufferedReaderWriter(File file,  int buffSize)
     {
@@ -74,7 +71,7 @@ public class LazyBufferedReaderWriter extends OutputStream
      * Constructor with outstream and the customized buffer size
      *
      * @param   out    the underlying output stream.
-     * @param   size   the buffer size.
+     * @param   buffSize   the buffer size.
      */
     public LazyBufferedReaderWriter(OutputStream out, int buffSize) 
     {

@@ -42,7 +42,6 @@ public class ClassTransformer extends TransformerImplBase
   
     /**
      *  Adds parameters before transforming.
-     *  @see	java.util.Enumeration
      */
     private void addParams()
     {
@@ -56,10 +55,6 @@ public class ClassTransformer extends TransformerImplBase
   
     /**
      * Transforms the input document.
-     * @see		ClassTransformer#loadStyleSheetClass()
-     * @see		StyleSheetTransformer#setXslProcessorParams()
-     * @see		com.sun.xslt.dom.DOM
-     * @see		com.sun.xml.parser.Parser
      * @exception	TransformException
      */
     public void doTransform() throws TransformException

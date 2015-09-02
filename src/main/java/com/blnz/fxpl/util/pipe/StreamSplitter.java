@@ -1,5 +1,3 @@
-// $Id: StreamSplitter.java 710 2006-02-23 23:21:24Z upayavira $
-
 package com.blnz.fxpl.util.pipe;
 
 import java.io.*;
@@ -25,6 +23,7 @@ public class StreamSplitter extends FilterOutputStream
     {
         super(out);
     }
+
     /**
      * constructor with the underlying sink and a URL location to write to.
      *
@@ -35,7 +34,7 @@ public class StreamSplitter extends FilterOutputStream
     {
         super(out); 
         if (Log.getLogger().isDebugEnabled()) {
-            Log.getLogger().debug("IrisStreamSplitter: gonna open second stream to: " + fileUrl);
+            Log.getLogger().debug("StreamSplitter: gonna open second stream to: " + fileUrl);
         }
         setOutStream2(fileUrl);    
     }
@@ -81,7 +80,7 @@ public class StreamSplitter extends FilterOutputStream
     /**
      * Writes the specified <code>byte</code> to the output streams. 
      * <p>
-     * The <code>write</code> method of <code>IrisStreamSplitter</code> 
+     * The <code>write</code> method of <code>StreamSplitter</code> 
      * calls the <code>write</code> method of its underlying output stream, 
      * that is, it performs <tt>out.write(b)</tt>.
      * <p>
@@ -99,7 +98,7 @@ public class StreamSplitter extends FilterOutputStream
     /**
      * Writes <code>b.length</code> bytes to the output streams. 
      * <p>
-     * The <code>write</code> method of <code>IrisStreamSplitter</code> 
+     * The <code>write</code> method of <code>StreamSplitter</code> 
      * calls its <code>write</code> method of three arguments with the 
      * arguments <code>b</code>, <code>0</code>, and 
      * <code>b.length</code>. 
@@ -110,7 +109,7 @@ public class StreamSplitter extends FilterOutputStream
      *
      * @param      b   the data to be written.
      * @exception  IOException  if an I/O error occurs.
-     * @see        IrisStreamSplitter#write(byte[], int, int)
+     * @see        StreamSplitter#write(byte[], int, int)
      */
     public void write(byte b[]) throws IOException 
     {
@@ -122,20 +121,20 @@ public class StreamSplitter extends FilterOutputStream
      * <code>byte</code> array starting at offset <code>off</code> to 
      * the output streams. 
      * <p>
-     * The <code>write</code> method of <code>IrisStreamSplitter</code> 
+     * The <code>write</code> method of <code>StreamSplitter</code> 
      * calls the <code>write</code> method of one argument on each 
      * <code>byte</code> to output. 
      * <p>
      * Note that this method does not call the <code>write</code> method 
      * of its underlying input stream with the same arguments. Subclasses 
-     * of <code>IrisStreamSplitter</code> should provide a more efficient 
+     * of <code>StreamSplitter</code> should provide a more efficient 
      * implementation of this method. 
      *
      * @param      b     the data.
      * @param      off   the start offset in the data.
      * @param      len   the number of bytes to write.
      * @exception  IOException  if an I/O error occurs.
-     * @see        IrisStreamSplitter#write(int)
+     * @see        StreamSplitter#write(int)
      */
     public void write(byte b[], int off, int len) throws IOException 
     {
@@ -151,12 +150,12 @@ public class StreamSplitter extends FilterOutputStream
      * Flushes this output stream and forces any buffered output bytes 
      * to be written out to the stream. 
      * <p>
-     * The <code>flush</code> method of <code>IrisStreamSplitter</code> 
+     * The <code>flush</code> method of <code>StreamSplitter</code> 
      * calls the <code>flush</code> method of its underlying output streams. 
      *
      * @exception  IOException  if an I/O error occurs.
-     * @see        IrisStreamSplitter#out
-     * @see        IrisStreamSplitter#cacheBufStream
+     * @see        StreamSplitter#out
+     * @see        StreamSplitter#cacheBufStream
      */
     public void flush() throws IOException 
     {
@@ -168,14 +167,14 @@ public class StreamSplitter extends FilterOutputStream
      * Closes this output stream and releases any system resources 
      * associated with the stream. 
      * <p>
-     * The <code>close</code> method of <code>IrisStreamSplitter</code> 
+     * The <code>close</code> method of <code>StreamSplitter</code> 
      * calls its <code>flush</code> method, and then calls the 
      * <code>close</code> method of its underlying output streams. 
      *
      * @exception  IOException  if an I/O error occurs.
-     * @see        IrisStreamSplitter#flush()
-     * @see        IrisStreamSplitter#out
-     * @see        IrisStreamSplitter#cacheBufStream
+     * @see        StreamSplitter#flush()
+     * @see        StreamSplitter#out
+     * @see        StreamSplitter#cacheBufStream
      */
     public void close() throws IOException 
     {

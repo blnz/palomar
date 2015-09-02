@@ -29,9 +29,6 @@ public class FakeGroup implements Group
     /**
      * set the name of the group
      * @param name the new name for the group
-     * @return the old group name, or empty string if the 
-     *                 group didn't hava a name,
-     * or null if permission denied.
      */
     public void setName(String name) throws Exception
     {

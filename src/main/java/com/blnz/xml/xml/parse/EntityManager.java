@@ -5,8 +5,6 @@ import java.io.IOException;
 
 /**
  * This interface is used by the parser to access external entities.
- * @see Parser
- * @version $Revision: 1.4 $ $Date: 1998/02/17 04:20:32 $
  */
 public interface EntityManager {
   /**

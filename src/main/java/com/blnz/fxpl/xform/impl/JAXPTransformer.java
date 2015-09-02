@@ -90,8 +90,8 @@ public class JAXPTransformer  extends TransformerImplBase
     }
 
     /**
-     * @param a SAX Reader which will produce the events of reading
-      the stylesheet
+     * @param styleSource contains a SAX Reader which will produce the events of reading
+     * the stylesheet
      */
     public void setStyleReader(Source styleSource)  throws Exception
     {

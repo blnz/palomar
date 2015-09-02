@@ -313,7 +313,7 @@ public class FSRepositoryItem implements RepositoryItem
     
     /**
      * mark this item as no longer active
-     * @deprecated As of FDX 3.5, use {@link deleteSelf( Timestamp, boolean )}
+     * @deprecated 
      */
     public int deleteSelf()
         throws Exception

@@ -28,7 +28,6 @@ public class  Log
     }
     
     /**
-     *
      */
     public static final Logger getLogger(String category) 
     {
@@ -52,7 +51,8 @@ public class  Log
         } catch (Exception ex) {
             // we just want to have a fallback logger, and continue
             try {
-                System.out.println("Logger configuration failed. Using SimpleLogger: " + ex.getMessage());
+                System.out.println("Logger configuration failed. Using SimpleLogger: " + 
+                                   ex.getMessage());
                 return instantiate(com.blnz.fxpl.log.impl.SimpleLogger.class, category);
             } catch (Exception e) {
                 System.out.println("Error creating logger: " + e.getMessage());

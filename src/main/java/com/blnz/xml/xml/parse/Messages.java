@@ -10,8 +10,6 @@ import com.blnz.util.Hashtable;
  * in <code>NotWellFormedException</code>.
  *
  * @see NotWellFormedException
- * @see Parser
- * @version $Revision: 1.10 $ $Date: 1998/05/14 02:04:05 $
  */
 public class Messages extends ListResourceBundle {
   protected Object[][] getContents() {

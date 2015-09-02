@@ -12,7 +12,7 @@ public class NetUtils {
     
     /**
      * Array containing the safe characters set as defined by RFC 1738
-     * safeCharacters & hexadecimal taken from Cocoon's 
+     * safeCharacters,  hexadecimal taken from Cocoon's 
      * org.apache.cocoon.util.NetUtils
      */
     private static BitSet safeCharacters;
@@ -86,7 +86,6 @@ public class NetUtils {
     /**
      * Removes the anchor part of a URL
      * @param url
-     * @return
      */
     public static String deanchor(String url) {
         int hashPos = url.indexOf('#');

@@ -18,16 +18,12 @@ public interface Group
     public String getName();
 
     /**
-     * @return all the users that belong to this group
+     * @return all the Users that belong to this group
      */
     public User[] getGroupUsers();
 
     /**
-     * set the name of the group
      * @param name the new name for the group
-     * @return the old group name, or empty string if the 
-     *                 group didn't hava a name,
-     * or null if permission denied.
      */
     public void setName(String name) throws Exception;
 

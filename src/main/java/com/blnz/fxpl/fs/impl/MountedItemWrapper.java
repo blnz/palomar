@@ -1,5 +1,3 @@
-// $Id: FSRepositoryItem.java 165 2005-04-29 22:38:44Z blindsey $
-
 package com.blnz.fxpl.fs.impl;
 
 import com.blnz.fxpl.fs.FsRepository;
@@ -131,7 +129,7 @@ public class MountedItemWrapper implements RepositoryItem
     
     /**
      * mark this item as no longer active
-     * @deprecated As of FDX 3.5, use {@link deleteSelf( Timestamp, boolean )}
+     * @deprecated 
      */
     public int deleteSelf()
 	throws Exception

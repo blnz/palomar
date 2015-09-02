@@ -18,7 +18,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * fetch an xml document from the repository, and evaluate it as FXPL
+ * fetch an xml document from the repository
  */
 public class ItemGet extends FXRequestServerSide
 {
@@ -37,7 +37,6 @@ public class ItemGet extends FXRequestServerSide
         }
         
         boolean isBinary = toBoolean((String)context.get("asBinary"));
-
         
         try {
             RepositoryItem item = super.getItem(ctx);
@@ -88,7 +87,6 @@ public class ItemGet extends FXRequestServerSide
             logger.error(ex.getMessage(), ex);
             errorResponse(ex, responseTarget, ctx);
         }
-               
     }
     
     /**

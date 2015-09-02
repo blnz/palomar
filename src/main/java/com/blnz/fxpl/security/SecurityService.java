@@ -43,7 +43,6 @@ public interface SecurityService
     /**
      * authenticate using a hash code.
      *@param hash the hash code
-     *@param password password
      *@return the User object representing the authenticated user
      * or <code>null</code> if unable to authenticate.
      */

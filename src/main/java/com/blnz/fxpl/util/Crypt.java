@@ -1,5 +1,3 @@
-//$Id: Crypt.java 46 2004-12-11 00:39:16Z blindsey $
-
 package com.blnz.fxpl.util;
 
 import java.security.MessageDigest;
@@ -715,7 +713,6 @@ public class Crypt
      * Decodes the given string using the base64-encoding specified in
      * RFC-1521 (Section 5.2).
      *
-     * @see http://info.internet.isi.edu/in-notes/rfc/files/rfc1521.txt
      * @param string the string to decode.
      * @return the decoded string or null if there was a problem decoding
      */
@@ -733,7 +730,6 @@ public class Crypt
      * Decodes the given byte[] using the base64-encoding specified in
      * RFC-1521 (Section 5.2).
      *
-     * @see http://info.internet.isi.edu/in-notes/rfc/files/rfc1521.txt
      * @param  data the base64-encoded data.
      * @param  start the position in the array to start.
      * @param  len the number of bytes to decode.
@@ -798,7 +794,6 @@ public class Crypt
      * (This results in a maximum of (57/3)*4 or 76 characters per output
      * line.)
      *
-     * @see http://info.internet.isi.edu/in-notes/rfc/files/rfc1521.txt
      * @param  string data to be base64-encoded.
      * @return the encoded string or null if there was a problem encoding.
      */
@@ -820,7 +815,6 @@ public class Crypt
      * (This results in a maximum of (57/3)*4 or 76 characters per output
      * line.)
      *
-     * @see http://info.internet.isi.edu/in-notes/rfc/files/rfc1521.txt
      * @param  data data to be base64-encoded.
      * @param  start the position in the array to start.
      * @param  len the number of bytes to encode.

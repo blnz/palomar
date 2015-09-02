@@ -1,5 +1,3 @@
-// $Id: ISXMLReaderFilter.java 100 2005-03-04 19:59:18Z blindsey $
-
 package com.blnz.fxpl.xform.impl;
 
 import org.xml.sax.XMLReader;
@@ -11,7 +9,7 @@ import org.xml.sax.helpers.XMLFilterImpl;
 import java.io.IOException;
 
 /**
- * An XMLREader (or filter) that only parses the InputSource given at construction time
+ * An XMLReader (or filter) that only parses the InputSource that was given at construction time
  */
 public class ISXMLReaderFilter extends XMLFilterImpl
 

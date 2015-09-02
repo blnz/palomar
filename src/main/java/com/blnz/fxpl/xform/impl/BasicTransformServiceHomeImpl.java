@@ -89,7 +89,7 @@ public class BasicTransformServiceHomeImpl implements TransformService
      *  SAX2 XML Filter
      * @param upstream the SAX 2  XMLReader (parser) which delivers the
      *   input parse events to the Transformer
-     * @param styleSheet a URI for the stylesheet
+     * @param stylesheet a URI for the stylesheet
      */
     public Transformer createXSLTTransformer(XMLReader upstream,
                                              RepositoryItem stylesheet)
