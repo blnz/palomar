@@ -134,6 +134,9 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
         } else {
             preserve = _currentNode.preserveSpace();
         }
+        System.out.println("startElement: " + namespaceURI + " : " + localName);
+
+        System.out.println("_neFactory: _neFactory " + ((_neFactory == null) ?  "is null" : "exists")); 
 
         NodeExtension ne = (_neFactory == null) ?  
             _defaultNodeExtension : 
@@ -682,6 +685,8 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
             systemId = loc.getSystemId();
             int nAtts = attList.getLength();
 
+            System.out.println("ElementNodeImpl constructor: " + namespaceURI + " : " + name);
+
             if (namespaces.size() > 0) {
                 Enumeration keys = namespaces.keys();
                 while (keys.hasMoreElements()) {
@@ -746,7 +751,6 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
                         String tem = attList.getQName(i);
                         if (!tem.startsWith("xmlns")) { 
                             // drop namespace declarations
-                            
                             
                             // if the reader wasn't sending start/end mapping events, and we didn't get
                             //  namespace declarations, we'll still catch namespaces here

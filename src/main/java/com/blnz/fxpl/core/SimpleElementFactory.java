@@ -145,7 +145,7 @@ public class SimpleElementFactory implements NodeExtensionFactory, LoadContext
                              Dictionary	node2class,
                              ClassLoader loader)
     {
-//       System.out.println("SimpleElementFactory::map2Class Entry " + key);
+        System.out.println("SimpleElementFactory::map2Class Entry " + key);
 //
 //        if (true) {
 //          Enumeration keys = node2class.keys(); 
@@ -168,7 +168,7 @@ public class SimpleElementFactory implements NodeExtensionFactory, LoadContext
 	    String	className = (String) mapResult;
 	    Class	retval = null;
 
-            //            System.out.println("SimpleElementFactory::map2Class haveString for '" + key + "' of '" + className);
+            System.out.println("SimpleElementFactory::map2Class haveString for '" + key + "' of '" + className);
 	    try {
 		if (loader == null)  {
 		    retval = Class.forName (className);

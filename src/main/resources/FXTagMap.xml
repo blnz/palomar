@@ -1,0 +1,216 @@
+<bindings>
+  <!-- bindings for the default namespace -->
+  <binding tag="*Element" class="com.blnz.fxpl.core.FXRequestServerSide"/>
+  
+  <namespace uri="http://namespaces.blnz.com/echo">
+
+    <binding tag="*Element" class="com.blnz.fxpl.core.FXRequestServerSide"/>
+
+    <binding tag="uriGet" class="com.blnz.fxpl.core.URIGet"/>
+    
+    <binding tag="uriPost" class="com.blnz.fxpl.core.URIPost"/>
+    <binding tag="uriPostForm" class="com.blnz.fxpl.core.URIPostForm"/>
+    
+    <binding tag="filePut" class="com.blnz.fxpl.core.FilePutImpl"/>
+    
+    <binding tag="fileGet" class="com.blnz.fxpl.core.FileGetImpl"/>
+
+    <binding tag="toStandardOut" class="com.blnz.fxpl.core.WriteBytesImpl"/>
+
+    <binding tag="parseStandardIn" class="com.blnz.fxpl.core.ParseStdinImpl"/>
+
+    <binding tag="writeJar" class="com.blnz.fxpl.core.WriteJarImpl"/>
+
+    <binding tag="loadJar" class="com.blnz.fxpl.core.LoadJarImpl"/>
+
+    <binding tag="sysCall" class="com.blnz.fxpl.core.SystemCall"/>
+
+    <binding tag="useCache" class="com.blnz.fxpl.core.UseCacheImpl"/>
+
+    <binding tag="quote" class="com.blnz.fxpl.core.InlineDocImpl"/>
+    <binding tag="inlineDoc" class="com.blnz.fxpl.core.InlineDocImpl"/>
+
+    <binding tag="context" class="com.blnz.fxpl.core.FXContextImpl"/>
+
+    <binding tag="documentation" class="com.blnz.fxpl.core.DocumentationImpl"/>
+
+    <binding tag="eval" class="com.blnz.fxpl.core.EvalImpl"/>
+
+    <binding tag="silent" class="com.blnz.fxpl.core.SilentImpl"/>
+
+    <binding tag="xslt" class="com.blnz.fxpl.core.ItemXSLT"/>
+
+    <binding tag="clojure" class="com.blnz.fxpl.core.ClojureImpl"/>
+
+    <binding tag="xpathValue" class="com.blnz.fxpl.core.XPATHExpr"/>
+    <binding tag="xpathCopy" class="com.blnz.fxpl.core.XPATHCopy"/>
+
+    <binding tag="makeHash" class="com.blnz.fxpl.core.MakeHashImpl"/>
+
+    <binding tag="element" class="com.blnz.fxpl.core.GroupImpl"/>
+
+    <binding tag="echo" class="com.blnz.fxpl.core.GroupImpl"/>
+
+    <binding tag="trim" class="com.blnz.fxpl.core.GroupImpl"/>
+
+    <binding tag="paginate" class="com.blnz.fxpl.core.PaginationImpl"/>
+
+    <binding tag="paramSet" class="com.blnz.fxpl.core.ParamSetImpl"/>
+    <binding tag="param" class="com.blnz.fxpl.core.FXParamImpl"/>
+    <binding tag="paramRef" class="com.blnz.fxpl.core.ParamRefImpl"/>
+
+    <binding tag="standardXMLIn" class="com.blnz.fxpl.core.StandardXMLIn"/>
+
+    <binding tag="rdbRequest" class="com.blnz.fxpl.core.DBQueryImpl"/>
+
+    <binding tag="fop" class="com.blnz.fxpl.core.FopImpl"/>
+
+    <binding tag="soap" class="com.blnz.fxpl.core.InvokeSOAPImpl"/>
+
+    <binding tag="toString" class="com.blnz.fxpl.core.ToStringImpl"/>
+
+    <binding tag="parseString" class="com.blnz.fxpl.core.ParseStringImpl"/>
+
+    <binding tag="wrap" class="com.blnz.fxpl.core.WrapImpl"/>
+
+    <binding tag="continue" class="com.blnz.fxpl.core.ContinueImpl"/>
+
+    <binding tag="choose" class="com.blnz.fxpl.core.FXChoose2"/>
+
+    <binding tag="when" class="com.blnz.fxpl.core.WhenImpl"/>
+
+    <binding tag="otherwise" class="com.blnz.fxpl.core.OtherwiseImpl"/>
+
+    <binding tag="flatFileGet" class="com.blnz.fxpl.core.FlatFileGetImpl"/>
+
+    <binding tag="flatFileWrite" class="com.blnz.fxpl.core.FlatFileWriteImpl"/>
+
+    <!-- joins two data streams (outer) -->
+    <binding tag="join" class="com.blnz.fxpl.core.MergeJoinImpl"/>
+
+    <!-- returns the union of two like data streams -->
+    <binding tag="union" class="com.blnz.fxpl.core.UnionImpl"/>
+
+    <!-- returns the intersection of two like data streams -->
+    <binding tag="intersect" class="com.blnz.fxpl.core.IntersectImpl"/>
+
+    <binding tag="noEval" class="com.blnz.fxpl.core.NoEvalImpl"/>
+
+    <binding tag="noTransform" class="com.blnz.fxpl.core.NullTransformImpl"/>
+
+    <binding tag="elementFilter" class="com.blnz.fxpl.core.ElementFilterImpl"/>
+
+    <binding tag="attributeFilter" class="com.blnz.fxpl.core.AttributeFilterImpl"/>
+
+    <binding tag="invalidateCache" class="com.blnz.fxpl.core.InvalidateCacheImpl"/>
+
+<!-- perform a function for each sub-branch at a given depth of input  -->
+    <binding tag="map" class="com.blnz.fxpl.core.MapImpl"/>
+
+    <binding tag="count" 
+      class="com.blnz.fxpl.core.CountRowsImpl"/>
+
+    <binding tag="sort" 
+      class="com.blnz.fxpl.core.SortImpl"/>
+    
+    <binding tag="getURLStream" class="com.blnz.fxpl.core.URIGet"/>
+
+    <binding tag="httpGetBytes" class="com.blnz.fxpl.core.URIGet"/>
+    <binding tag="httpGet" class="com.blnz.fxpl.core.URIGet"/>
+
+    <binding tag="copyBytes" class="com.blnz.fxpl.core.CopyBytes"/>
+
+    <binding tag="itemGetBytes" class="com.blnz.fxpl.core.ItemGetBytesImpl" />
+
+    <binding tag="itemGet" class="com.blnz.fxpl.core.ByIDFetchImpl"/>
+
+    <binding tag="itemPut" class="com.blnz.fxpl.core.ItemInsertImpl"/>
+    <binding tag="itemInsert" class="com.blnz.fxpl.core.ItemInsertImpl"/>
+
+    <binding tag="itemList" class="com.blnz.fxpl.core.ListDirectoryImpl"/>
+
+    <binding tag="itemEval" class="com.blnz.fxpl.core.ItemEval"/>
+
+    <binding tag="createDirectory" class="com.blnz.fxpl.core.CreateDirectoryImpl"/>
+
+    <binding tag="itemDelete" class="com.blnz.fxpl.core.DeleteXStoreItemImpl"/>
+
+    <binding tag="time" class="com.blnz.fxpl.core.TimeImpl"/>
+    <binding tag="log" class="com.blnz.fxpl.core.TimeImpl"/>
+
+    <binding tag="base64Decode" 
+      class="com.blnz.fxpl.core.Base64Decode" />
+
+    <binding tag="base64Encode" 
+      class="com.blnz.fxpl.core.Base64Encode" />
+
+    <binding tag="date" class="com.blnz.fxpl.core.DateImpl"/>
+
+    <binding tag="sessionGet" class="com.blnz.fxpl.core.SessionGetImpl"/>
+
+    <binding tag="sessionPut" class="com.blnz.fxpl.core.SessionPutImpl"/>
+
+    <binding tag="getLinks" class="com.blnz.fxpl.core.CrawlerImpl"/>
+
+    <binding tag="validate" class="com.blnz.fxpl.core.Validate"/>
+
+    <binding tag="sendMail" class="com.blnz.fxpl.core.SendMailImpl"/>
+
+    <binding tag="multiPart" class="com.blnz.fxpl.mail.MultiPartImpl"/>
+
+    <binding tag="part" class="com.blnz.fxpl.mail.PartImpl"/>
+
+    <binding tag="pop" class="com.blnz.fxpl.core.PopImpl"/>
+
+    <binding tag="encrypt" class="com.blnz.fxpl.core.EncryptImpl"/>
+
+    <binding tag="decrypt" class="com.blnz.fxpl.core.DecryptImpl"/>
+    <binding tag="bytesToString" class="com.blnz.fxpl.core.StreamToString"/>
+
+    <binding tag="import" class="com.blnz.fxpl.core.Import"/>
+    <binding tag="evalRemote" class="com.blnz.fxpl.core.EvalRemote"/>
+    <binding tag="sleep" class="com.blnz.fxpl.core.Sleep"/>
+    <binding tag="sudo" class="com.blnz.fxpl.core.SudoImpl"/>
+                
+  </namespace>
+
+
+  <namespace uri="http://namespaces.blnz.com/fxpl-session">
+
+    <binding tag="request" class="com.blnz.fxpl.core.RequestRootImpl"/>
+
+    <binding tag="response" class="com.blnz.fxpl.core.FXResponseImpl"/>
+
+    <binding tag="login" class="com.blnz.fxpl.core.LoginImpl"/>
+
+    <binding tag="logout" class="com.blnz.fxpl.core.LogoutImpl"/>
+
+  </namespace>
+
+  <namespace uri="http://namespaces.blnz.com/echounit">
+    <binding tag="unit" class="com.blnz.fxpl.echounit.echo.UnitImpl"/>
+    <binding tag="runTests" class="com.blnz.fxpl.echounit.echo.RunTestsImpl"/>
+    <binding tag="assertEquals" class="com.blnz.fxpl.echounit.echo.AssertEqualsImpl"/>
+    <binding tag="cleanUp" class="com.blnz.fxpl.echounit.echo.CleanupImpl"/>
+  </namespace>
+
+  <namespace uri="http://namespaces.blnz.com/web">
+    <binding tag="auth" class="com.blnz.fxpl.web.echo.AuthImpl"/>
+    <binding tag="redirect" class="com.blnz.fxpl.web.echo.RedirectImpl"/>
+    <binding tag="setContentType" class="com.blnz.fxpl.web.echo.SetContentTypeImpl"/>
+    <binding tag="setResponseCode" class="com.blnz.fxpl.web.echo.SetResponseCode"/>
+    <binding tag="setResponseHeader" class="com.blnz.fxpl.web.echo.SetHeaderImpl"/>
+    <binding tag="sendError" class="com.blnz.fxpl.web.echo.SendErrorImpl"/>
+    <binding tag="cookieGet" class="com.blnz.fxpl.web.echo.CookieGetImpl"/>
+    <binding tag="cookiePut" class="com.blnz.fxpl.web.echo.CookiePutImpl"/>
+    <binding tag="sessionGet" class="com.blnz.fxpl.web.echo.SessionGetImpl"/>
+    <binding tag="sessionPut" class="com.blnz.fxpl.web.echo.SessionPutImpl"/>
+    <binding tag="batch" class="com.blnz.fxpl.web.echo.BatchImpl"/>
+    <binding tag="i18n" class="com.blnz.fxpl.web.echo.I18nFilterImpl"/>
+
+    <binding tag="matchers" class="com.blnz.fxpl.web.sitemap.MatchersImpl"/>
+    <binding tag="mount" class="com.blnz.fxpl.web.sitemap.impl.MountImpl"/>
+    <binding tag="matchUri" class="com.blnz.fxpl.web.sitemap.impl.WildcardURLMatcher"/>
+  </namespace>
+
+</bindings>

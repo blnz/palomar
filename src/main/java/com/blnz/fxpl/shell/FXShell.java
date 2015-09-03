@@ -42,7 +42,7 @@ public class FXShell
      *  an SixleService
      */
     public FXShell(String xfyServiceName, 
-                     String userName, String password)
+                   String userName, String password)
     {
         init(xfyServiceName, userName, password);
     }
@@ -86,8 +86,6 @@ public class FXShell
         
         String line = null;
         boolean done = false;
-
-
 
         BufferedReader r = 
             new BufferedReader(new InputStreamReader(System.in));

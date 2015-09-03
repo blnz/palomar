@@ -26,20 +26,23 @@ public class ConfigProps
             System.out.println("ConfigProps: Initialization error: " + e.getMessage());
         }
 
+
+        System.out.println("ConfigProps: init() -- propsFile = " + propsFile);
         _propsURL = getResource(propsFile, null);
 
         InputStream is = null;
         if (_propsURL != null ) {
 
-            //  System.out.println("url is {" + _propsURL.toString() + "}");
+            System.out.println("ConfigProps url is {" + _propsURL.toString() + "}");
             try {
                 is = _propsURL.openStream();
             } catch (Exception ex) {
                 System.out.println("ConfigProps: couldn't open stream");
                 ex.printStackTrace();
             }
-        } 
-
+        } else {
+            System.out.println("null propsURL");
+        }
         if (is != null) {
             try {
                 load(is);
@@ -52,7 +55,7 @@ public class ConfigProps
             }
         }
 
-        // System.out.println("ConfigProps: cannot load properties, bailing");
+        System.out.println("ConfigProps: cannot load properties, but not bailing");
         // System.exit(1);
     }
 

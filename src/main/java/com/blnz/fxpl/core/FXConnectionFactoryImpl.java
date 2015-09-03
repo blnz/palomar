@@ -157,11 +157,11 @@ public class FXConnectionFactoryImpl
         try {
             buildFactory((FXElementFactory)_localCommandFact, coreTagMapURL, defaultTagMap);
             buildFactory((FXElementFactory)_localResponseFact, coreTagMapURL, defaultResponseMap);
-//            System.out.println("FXConnectionFactoryImpl:: built 2 factories 1");
+            //            System.out.println("FXConnectionFactoryImpl:: built 2 factories 1");
         } catch (RuntimeException ex) {
             Log.getLogger().warn("failed to load core TagMap: " + coreTagMapURL + " -- " + ex.getMessage());
         }
-
+        
         URL tagMapURL = ConfigProps.getResource(localTagMap, ConfigProps.propsBaseURL());
         if (! coreTagMapURL.equals(tagMapURL)) {
             try {
@@ -181,7 +181,7 @@ public class FXConnectionFactoryImpl
         TransformService tsh = XForm.getTransformService();
         
         if (mapURL == null) {
-            System.out.println("no tagmap URL");
+            System.out.println("buildFactory(): no tagmap URL");
             return null;
         }
 
