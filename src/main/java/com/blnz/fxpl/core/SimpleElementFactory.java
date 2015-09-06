@@ -145,15 +145,15 @@ public class SimpleElementFactory implements NodeExtensionFactory, LoadContext
                              Dictionary	node2class,
                              ClassLoader loader)
     {
-        System.out.println("SimpleElementFactory::map2Class Entry " + key);
-//
-//        if (true) {
-//          Enumeration keys = node2class.keys(); 
-//          while ( keys.hasMoreElements() ) {
-//              System.out.println( " key: " + keys.nextElement().toString());
-//          }
-//
-//        }
+        //        System.out.println("SimpleElementFactory::map2Class Entry " + key);
+        //
+        //        if (true) {
+        //          Enumeration keys = node2class.keys(); 
+        //          while ( keys.hasMoreElements() ) {
+        //              System.out.println( " key: " + keys.nextElement().toString());
+        //          }
+        //
+        //        }
 	Object		mapResult = node2class.get (key);
 
 	if (mapResult == null) {
@@ -168,7 +168,7 @@ public class SimpleElementFactory implements NodeExtensionFactory, LoadContext
 	    String	className = (String) mapResult;
 	    Class	retval = null;
 
-            System.out.println("SimpleElementFactory::map2Class haveString for '" + key + "' of '" + className);
+            //    System.out.println("SimpleElementFactory::map2Class haveString for '" + key + "' of '" + className);
 	    try {
 		if (loader == null)  {
 		    retval = Class.forName (className);
@@ -186,7 +186,7 @@ public class SimpleElementFactory implements NodeExtensionFactory, LoadContext
 	    } catch (Throwable ex) {
 	        ex.printStackTrace();
 	    } finally {
-//	        System.out.println("whoops");
+                //	        System.out.println("whoops");
 	    }
 	}
 

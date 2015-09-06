@@ -90,17 +90,17 @@ public class ItemPut extends FXRequestServerSide {
             User user = getUser(ctx);
 
             // Get target item (directory to copy item to)
-            String name = (String) context.get("name");
+            String name = (String) ctx.get("name");
             if (name == null || name.length() == 0) {
                 throw new Exception("null item name");
             }
 
-            String path = (String) context.get("path");
+            String path = (String) ctx.get("path");
             if (path == null) {
                 throw new Exception("Target item path not specified.");
             }
 
-            String cds = (String) context.get("createFolders");
+            String cds = (String) ctx.get("createFolders");
             boolean createDirs = ("yes".equals(cds) || "true".equals(cds));
 
             if (logger.isDebugEnabled()) {
@@ -111,7 +111,7 @@ public class ItemPut extends FXRequestServerSide {
             String[] pparts = RepositoryUtil.splitPath(RepositoryUtil
                     .normalizePath(path, name));
 
-            xact = (Transaction) context.get("currentTransaction");
+            xact = (Transaction) ctx.get("currentTransaction");
 
             if (xact == null) {
                 xact = repos.startTransaction();
@@ -124,6 +124,8 @@ public class ItemPut extends FXRequestServerSide {
             }
 
             RepositoryItem parentDir;
+
+            System.out.println("gettingParentDir for : " + pparts[0]);
             if (createDirs) {
                 parentDir = repos.getOrCreateFolder(xact, user, pparts[0]);
             } else {
@@ -138,9 +140,9 @@ public class ItemPut extends FXRequestServerSide {
                         + ". Cannot read parent directory: " + pparts[0]);
             }
 
-            String sourceID = (String) context.get("sourceID");
-            String insertAs = (String) context.get("insertAs");
-            String insertMimeType = (String) context.get("insertMimeType");
+            String sourceID = (String) ctx.get("sourceID");
+            String insertAs = (String) ctx.get("insertAs");
+            String insertMimeType = (String) ctx.get("insertMimeType");
 
             if (sourceID == null) {
                 // CMC: Modifiy

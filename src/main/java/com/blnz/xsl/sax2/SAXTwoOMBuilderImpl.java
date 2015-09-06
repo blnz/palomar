@@ -134,9 +134,9 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
         } else {
             preserve = _currentNode.preserveSpace();
         }
-        System.out.println("startElement: " + namespaceURI + " : " + localName);
+        //  System.out.println("startElement: " + namespaceURI + " : " + localName);
 
-        System.out.println("_neFactory: _neFactory " + ((_neFactory == null) ?  "is null" : "exists")); 
+        // System.out.println("_neFactory: _neFactory " + ((_neFactory == null) ?  "is null" : "exists")); 
 
         NodeExtension ne = (_neFactory == null) ?  
             _defaultNodeExtension : 
@@ -685,7 +685,7 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
             systemId = loc.getSystemId();
             int nAtts = attList.getLength();
 
-            System.out.println("ElementNodeImpl constructor: " + namespaceURI + " : " + name);
+            // System.out.println("ElementNodeImpl constructor: " + namespaceURI + " : " + name);
 
             if (namespaces.size() > 0) {
                 Enumeration keys = namespaces.keys();

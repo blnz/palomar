@@ -1082,6 +1082,7 @@ public class FSRepositoryItem implements RepositoryItem
         //ignore mimetype ?
         
         String newPath = getFullPath() + "/" + name;
+        System.out.println("FSRepositoryItem::makeChild( [" + newPath + "] )");
         
         FSRepositoryUtil.transportItem(is, new FileOutputStream(FSConnection.getResource(newPath)));
         

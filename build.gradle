@@ -15,7 +15,6 @@ jar {
     }
 }
 
-
 bintray {
     user = 'user'
     key = 'key'
@@ -53,7 +52,6 @@ publishing {
    }
 }
 
-
 task packageJavadoc(type: Jar, dependsOn: 'javadoc') {
     from javadoc.destinationDir
     classifier = 'javadoc'
@@ -69,3 +67,9 @@ artifacts {
     archives packageSources
 }
 
+dependencies {
+    //group:name:version
+
+    //group:name:version
+    testCompile "junit:junit:4.11"
+}

@@ -10,8 +10,6 @@ import com.blnz.fxpl.xform.XForm;
 
 import org.xml.sax.ContentHandler;
 
-import java.util.Hashtable;
-
 import java.util.StringTokenizer;
 
 import java.io.File;
@@ -34,8 +32,6 @@ public class FXShell
 
     private char[] _buf = new char[1024];
     private FXConnection _xfy;
-
-    private Hashtable _session;
 
     /**
      *  constructor attempts to obtain a configured instance of
@@ -68,8 +64,8 @@ public class FXShell
                 ConfigProps.setProperty(xfs, reposLoc);
             }
             _xfy = FXHome.getFXConnection(xfyServiceName, 
-                                              userName, 
-                                              password);
+                                          userName, 
+                                          password);
         } catch (FXException e) {
             System.err.println("failed to obtain FXPLService: " +
                                xfyServiceName);
@@ -94,6 +90,7 @@ public class FXShell
 
         while (!done) {
             // print command prompt
+
             System.out.print("\nX->");
             try {
                 line = r.readLine();

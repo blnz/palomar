@@ -30,11 +30,17 @@ public class FSConnection
     public static void initFSRepositoryPath(String path)
 	throws Exception
     {
+        System.out.println("FSConnection:initFSRepositoryPath( " + path + " ) entry");
         if (path == null || path.length() == 0) {
             path =  ConfigProps.getProperty("com.blnz.fxpl.fs.path" , 
-                                            "xfs");
+                                            "");
             if (!path.startsWith("/") && path.indexOf(':') == -1) {
                 String echoHome = ConfigProps.getProperty("fxpl.home");
+                System.out.println("FSConnection:initFSRepositoryPath( " + echoHome + " ) echoHome");
+                if (echoHome == null) {
+                    echoHome = System.getProperty("user.dir");
+                    System.out.println("FSConnection:initFSRepositoryPath( " + echoHome + " ) user.dir");
+                }
                 File echoURL = new File(echoHome);
                 path = new File(echoURL, path).getAbsolutePath();
             }

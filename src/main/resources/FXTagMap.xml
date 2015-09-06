@@ -2,7 +2,7 @@
   <!-- bindings for the default namespace -->
   <binding tag="*Element" class="com.blnz.fxpl.core.FXRequestServerSide"/>
   
-  <namespace uri="http://namespaces.blnz.com/echo">
+  <namespace uri="http://namespaces.blnz.com/fxpl">
 
     <binding tag="*Element" class="com.blnz.fxpl.core.FXRequestServerSide"/>
 
@@ -124,10 +124,10 @@
 
     <binding tag="itemGet" class="com.blnz.fxpl.core.ByIDFetchImpl"/>
 
-    <binding tag="itemPut" class="com.blnz.fxpl.core.ItemInsertImpl"/>
-    <binding tag="itemInsert" class="com.blnz.fxpl.core.ItemInsertImpl"/>
+    <binding tag="itemPut" class="com.blnz.fxpl.core.ItemPut"/>
+    <binding tag="itemInsert" class="com.blnz.fxpl.core.ItemPut"/>
 
-    <binding tag="itemList" class="com.blnz.fxpl.core.ListDirectoryImpl"/>
+    <binding tag="itemList" class="com.blnz.fxpl.core.itemList"/>
 
     <binding tag="itemEval" class="com.blnz.fxpl.core.ItemEval"/>
 

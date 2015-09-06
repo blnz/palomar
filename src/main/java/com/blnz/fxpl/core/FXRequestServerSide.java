@@ -316,7 +316,7 @@ public class FXRequestServerSide extends FXRequestImpl
 
         if (parentContext == null) {
             Name self = getNode().getName();
-            //            System.out.println("no context in "+ self.getNamespace() + ":" + self.getLocalPart());
+            System.out.println("no context in "+ self.getNamespace() + ":" + self.getLocalPart());
             throw new Exception ("null context in "+ self.getNamespace() + ":" + self.getLocalPart());
         }
 
@@ -334,6 +334,7 @@ public class FXRequestServerSide extends FXRequestImpl
             while (n != null) {
 
                 String attrName =  n.getName().getLocalPart();
+                System.out.println("FXRequestServerSide:: extending context with : " + attrName);
                 if (! attrName.equals("userID") &&
                     ! attrName.startsWith("xmlns")) {
                     if (! "{''}".equals(n.getData())) {
