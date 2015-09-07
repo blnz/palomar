@@ -9,6 +9,7 @@ repositories {
              maven { url "http://dl.bintray.com/blnz/blnz-dev" } 
              jcenter()
 }
+
 jar {
     manifest {
         attributes 'Main-Class': 'com.blnz.fxpl.shell.FXShell'
@@ -16,24 +17,21 @@ jar {
 }
 
 bintray {
-    user = 'user'
-    key = 'key'
-    filesSpec {
-     from 'build/libs'
-     into 'standalone_files/level1'
-    }
+    // user and key from "./gradle.properties" or "~/.gradle/gradle.properies"
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER') 
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : Systeem.getenv('BINTRAY_API_KEY')
 
     pkg {
-        repo = 'blnz/blnz-dev'
+        repo = 'blnz-dev'
         name = 'palomar'
         userOrg = 'blnz'
         licenses = ['MIT']
         vcsUrl = 'https://github.com/blnz/palomar.git'
         version {
-                name = '0.1'
+                name = '0.1.2'
                 desc = 'Palomar with XT'
                 released  = new Date()
-                vcsTag = '0.1.1'
+                vcsTag = '0.1.2'
                 attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
                 publications = ['mavenJava']
         }
@@ -45,9 +43,11 @@ publishing {
    publications {
         mavenJava(MavenPublication) {
             from components.java
+            artifact packageJavadoc
+            artifact packageSources
             groupId 'com.blnz'
             artifactId 'palomar-lib'
-            version '0.1'
+            version '0.1.2'
         }
    }
 }
@@ -68,8 +68,6 @@ artifacts {
 }
 
 dependencies {
-    //group:name:version
-
     //group:name:version
     testCompile "junit:junit:4.11"
 }

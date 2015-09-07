@@ -1082,7 +1082,7 @@ public class FSRepositoryItem implements RepositoryItem
         //ignore mimetype ?
         
         String newPath = getFullPath() + "/" + name;
-        System.out.println("FSRepositoryItem::makeChild( [" + newPath + "] )");
+        // System.out.println("FSRepositoryItem::makeChild( [" + newPath + "] )");
         
         FSRepositoryUtil.transportItem(is, new FileOutputStream(FSConnection.getResource(newPath)));
         
@@ -1257,6 +1257,7 @@ public class FSRepositoryItem implements RepositoryItem
         }
     }
     
+    // some metadata for an item: owner, group permissions
     // Well, please excuse me. This is a real hack. uv
     private void readMeta() {
         try {
