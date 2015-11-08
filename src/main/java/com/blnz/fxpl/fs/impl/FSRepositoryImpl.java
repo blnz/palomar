@@ -13,9 +13,7 @@ import com.blnz.fxpl.fs.Transaction;
 import com.blnz.fxpl.fs.FsException;
 import com.blnz.fxpl.fs.FsRepository;
 
-import com.blnz.fxpl.log.Log;
 import com.blnz.fxpl.util.ConfigProps;
-
 
 import com.blnz.fxpl.cache.Cache;
 import com.blnz.fxpl.cache.CacheHome;
@@ -26,12 +24,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Timestamp;
 
+import java.util.logging.Logger;
+
 /**
  *  Webdav implementation respository
  */
 public class FSRepositoryImpl implements FsRepository
 {
 
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     protected Cache _cache = null;
     protected boolean isCreatingMeta = false;
     
@@ -273,7 +274,7 @@ public class FSRepositoryImpl implements FsRepository
             try {
                 _cache.put(key, repositoryItem);
             } catch (Exception ex) {
-                Log.getLogger().warn(ex.getMessage(), ex);
+                LOGGER.warning(ex.getMessage());
             }
         }
     }

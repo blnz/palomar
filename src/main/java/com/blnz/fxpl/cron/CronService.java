@@ -1,5 +1,3 @@
-// $Id: CronService.java 46 2004-12-11 00:39:16Z blindsey $
-
 package com.blnz.fxpl.cron;
 
 /**

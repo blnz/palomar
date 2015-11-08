@@ -1,9 +1,8 @@
-// $Id: Job.java 46 2004-12-11 00:39:16Z blindsey $
-
 package com.blnz.fxpl.cron;
 
+
 /**
- * the interface for an cron job, managed by the cron service.
+ * the interface for a cron job, managed by the cron service.
  * objects managed by the cron service are run at a scheduled time
  * determined by the "unix-like" cron expression or refreshed
  * periodically at certain time interval
@@ -25,7 +24,6 @@ public interface Job
      */
     public String getCronExpr();
 
-    
     /**
      * method called by the cron job when its time to run
      */

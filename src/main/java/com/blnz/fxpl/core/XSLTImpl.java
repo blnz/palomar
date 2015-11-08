@@ -15,8 +15,7 @@ import com.blnz.fxpl.util.NoClosePrintWriter;
 import com.blnz.fxpl.xform.XForm;
 import com.blnz.fxpl.xform.Transformer;
 
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
+import java.util.logging.Logger;
 
 import com.blnz.fxpl.util.ConfigProps;
 
@@ -27,10 +26,8 @@ import com.blnz.xsl.om.SafeNodeIterator;
 import com.blnz.xsl.om.ExtensionContext;
 import com.blnz.xsl.sax2.SaxFilterMaker;
 
-
 import com.blnz.fxpl.FXHome;
 import com.blnz.fxpl.FXContext;
-
 
 import java.io.StringReader;
 import java.io.PrintWriter;
@@ -55,7 +52,6 @@ public class XSLTImpl extends FXRequestServerSide
         FXRequest inputSource = null;
 
         context = extendContext((FXContext) context);
-        
 
         try {
             
@@ -67,13 +63,11 @@ public class XSLTImpl extends FXRequestServerSide
 
                 NodeExtension ne = n.getNodeExtension();
                 n = kids.next();
-                
 
                 if (ne instanceof FXRequest) {
                     
                     if (ne instanceof ParamSetImpl) {
                         params = ((ParamSetImpl)n).getHashtable((FXContext) context);
-
 
                     } else if (!(ne instanceof FXContextImpl) &&
                             !(ne instanceof ParamSetImpl) &&
@@ -93,8 +87,6 @@ public class XSLTImpl extends FXRequestServerSide
                 } 
             }
             
-
-            
             if (params == null) {
                 params = new Hashtable();
             }
@@ -106,8 +98,7 @@ public class XSLTImpl extends FXRequestServerSide
             FXRequestReaderAdapter xformIn = 
                 new FXRequestReaderAdapter((FXContext)context, inputSource);
             
-            Transformer t = XForm.createXSLTTransformer(xformIn,
-                                                                       styleIn);
+            Transformer t = XForm.createXSLTTransformer(xformIn, styleIn);
             
             // kinda ugly, but we gotta try to be sure this property is defined
             // for sax ParserAdapter when called from stylesheets
@@ -125,7 +116,7 @@ public class XSLTImpl extends FXRequestServerSide
             }
             
             params.put("com.jclark.xsl.sax.SaxFilterMaker",
-                       new XRAPFilterMaker((FXContext) context, Log.getLogger()));
+                       new XRAPFilterMaker((FXContext) context));
             
             t.setParams(params);
             
@@ -147,9 +138,9 @@ public class XSLTImpl extends FXRequestServerSide
             ch.endDocument();
 
         } catch (java.lang.OutOfMemoryError err) {
-            Log.getLogger().info("!!!... whoops, out of memory!"); 
+            LOGGER.severe("!!!... whoops, out of memory!"); 
             err.printStackTrace();
-            throw new Exception("not enough memory!");
+            throw new Exception("not enough memory!");   // ummm .. will this work?
         }
     }
 
@@ -159,28 +150,16 @@ public class XSLTImpl extends FXRequestServerSide
 
         private XProcessor _xrap;
         private FXContext _ctxt;
-        private Logger _logger;
 
-        public XRAPFilterMaker(FXContext ctxt, Logger logger)
+        public XRAPFilterMaker(FXContext ctxt)
         {
             _ctxt = ctxt;
             _xrap = FXHome.getXProcessor("local");
-            _logger = logger;
-
-            if (_logger.isDebugEnabled()) {
-                _logger.debug("constructor");
-            }
         }
 
         public XMLFilter getFilter()
         {
-            if (_logger.isDebugEnabled()) {
-                _logger.debug("XFormXSLTImpl.XRAPFilterMaker.getFilter() called");
-            }
             XRAPFilter filt = new XRAPFilter(_ctxt, _xrap);
-            if (_logger.isDebugEnabled()) {
-                _logger.debug("XFormXSLTImpl.XRAPFilterMaker.getFilter() done");
-            }
             return filt;
         }
     }
@@ -219,6 +198,5 @@ public class XSLTImpl extends FXRequestServerSide
             parse(new InputSource(uri));
         }
     }
-
 
 }

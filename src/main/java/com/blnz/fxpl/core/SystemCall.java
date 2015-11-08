@@ -5,11 +5,6 @@ import com.blnz.fxpl.FXContext;
 
 import com.blnz.fxpl.xform.XForm;
 
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
-
-// import org.ccil.cowan.tagsoup.Parser;
-
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
@@ -286,10 +281,6 @@ public class SystemCall extends FXRequestServerSide
     public void eval(ContentHandler responseTarget, ExtensionContext context) 
         throws Exception
     {
-        Logger logger = Log.getLogger();
-        if (logger.isDebugEnabled()) {
-            logger.debug(getTagName() + ": eval() entry ");
-        }
         FXContext ctx = extendContext((FXContext)context);
 
         int exitval = 0;
@@ -354,20 +345,12 @@ public class SystemCall extends FXRequestServerSide
     public void parse(ContentHandler responseTarget, FXContext context, String parseable) 
         throws Exception
     {
-        Logger logger = Log.getLogger();
-        if (logger.isDebugEnabled()) {
-            logger.debug(getTagName() + ": eval() entry ");
-        }
-            
         // html character entities?
         String htmlChars = (String) context.get("htmlChars");
 
         // html character entities?
         String asHTML = (String) context.get("asHTML");
         try {
-            if (logger.isDebugEnabled()) {
-                logger.debug("parseable = {" + parseable + "} asHTML is {" + asHTML + "}");
-            }
             if ("".equals(parseable)) {
                 // do nothing
             
@@ -441,7 +424,7 @@ public class SystemCall extends FXRequestServerSide
     private String testCharEntity(String entityRef)
     {
         String test = "<z>" + entityRef + "</z>";
-        Log.getLogger().debug("gonna test {" + test + "}");
+
         InputSource src = new InputSource(new StringReader(test));
         src.setSystemId("dummy"); // FIXME: find a better base URI
 

@@ -14,8 +14,6 @@ import com.blnz.fxpl.xform.DOMWriter;
 import com.blnz.fxpl.expr.Expression;
 import com.blnz.fxpl.expr.XRExp;
 
-import com.blnz.fxpl.log.Log;
-
 import com.blnz.xsl.om.Node;
 import com.blnz.xsl.om.NodeIterator;
 import com.blnz.xsl.om.SafeNodeIterator;
@@ -55,6 +53,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
 
+import java.util.logging.Logger;
 
 /**
  * Provides context information for the evaluation of
@@ -77,6 +76,7 @@ public class FXContextImpl
 
     private FXContext _parent = null;
 
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     /**
      *  constructor with no arguments, a top-level context
@@ -149,13 +149,10 @@ public class FXContextImpl
 //		    return nval;
 
 		} catch (Throwable ex) {
-		    Log.getLogger().warn("Cannot parse context param expression {" + value + 
-					 "} with key {" + key  + "}");
+		    LOGGER.warning("Cannot parse context param expression {" + value + 
+                                   "} with key {" + key  + "}");
 
-		    Log.getLogger().warn(ex.getMessage(), ex);
-		    // value = "** expression error: " + ex.getMessage() + 
-		    //    "in [" + value + "] **";
-                
+		    LOGGER.warning(ex.toString());
 		}
 	    }
 	}
@@ -191,9 +188,9 @@ public class FXContextImpl
             }
             
         } catch (Throwable ex) {
-            Log.getLogger().warn("Cannot parse context param expression {" + val + "}");
+            LOGGER.warning("Cannot parse context param expression {" + val + "}");
             
-            Log.getLogger().warn(ex.getMessage(), ex);
+            LOGGER.warning(ex.toString());
             // value = "** expression error: " + ex.getMessage() + 
             //    "in [" + value + "] **";
             
@@ -364,7 +361,7 @@ public class FXContextImpl
      */
     private Object getSys(String key)
     {
-        Log.getLogger().info("getSys: {" + key + "}");
+        LOGGER.info("getSys: {" + key + "}");
         if ("date".equals(key)) {
             Date d = new Date();
             return DateFormat.getDateInstance().format(d);
@@ -381,11 +378,11 @@ public class FXContextImpl
      */
     private Object getSysProp(String key)
     {
-        Log.getLogger().info("getSysProp: {" + key + "}");        
+        LOGGER.info("getSysProp: {" + key + "}");        
         try {
             System.getProperties().list(System.out);
         } catch (Exception ex) {
-            Log.getLogger().warn("cannot list props");
+            LOGGER.warning("cannot list props");
         }
 
         return System.getProperty(key);
@@ -398,32 +395,13 @@ public class FXContextImpl
      */
     private Object getFdxProp(String key)
     {
-        Log.getLogger().info("getFdxProp: {" + key + "}");        
+        LOGGER.info("getFdxProp: {" + key + "}");        
         try {
             ConfigProps.getProperties().list(System.out);
         } catch (Exception ex) {
-            Log.getLogger().warn("cannot list props");
+            LOGGER.warning("cannot list props");
         }
         return ConfigProps.getProperty(key);
-    }
-
-    /**
-     * @return the environment variable identified by <code>key</code>
-     *
-     * @param key the name of the requested value
-     */
-    private Object getEnv(String key)
-    {
-        // FIXME: this doesn't work. ... steal some code from ANT, perhaps?
-        Log.getLogger().info("getEnv: {" + key + "}");
-        try{ 
-            String val = System.getenv(key);
-            Log.getLogger().info("val: {" + val + "}");
-            return val;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
     }
 
 

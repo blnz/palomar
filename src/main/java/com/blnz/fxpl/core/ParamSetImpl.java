@@ -2,14 +2,13 @@ package com.blnz.fxpl.core;
 
 import com.blnz.fxpl.FXContext;
 import com.blnz.fxpl.Parameter;
-import com.blnz.fxpl.log.Log;
 
 import com.blnz.xsl.om.Node;
 import com.blnz.xsl.om.NodeIterator;
 
 import java.util.Hashtable;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.logging.Logger;
+
 
 /**
  * represents a set of parameters to an FX request
@@ -46,7 +45,7 @@ public class ParamSetImpl extends FXRequestServerSide
                 try {
                     val = (String) ( getRaw ? ((FXContextImpl)context).getRaw(name) : context.get(name)  ) ;
                 } catch (ClassCastException ex) {
-                    Log.getLogger().warn(name + " is not a String value", ex);
+                    LOGGER.warning(name + " is not a String value " + ex.toString());
                 }
 
                 //lte: Added for stylesheets that'll need the user's ID

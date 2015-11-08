@@ -1,11 +1,4 @@
-// $Id: CacheProxy.java 828 2007-03-19 05:56:45Z blindsey $
-
 package com.blnz.fxpl.cache;
-
-// import com.blnz.fxpl.broker.Files;
-
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
 
 import com.blnz.fxpl.security.SecurityService;
 import com.blnz.fxpl.security.Security;
@@ -78,31 +71,17 @@ public class CacheProxy implements CacheService
     
     protected int cachesDefMaxsize;    
 
-    protected Logger logger = null;    // a place to report exceptions
-
     /** 
      * 
      */
     public CacheProxy() 
     {
-        logger = Log.getLogger();
         try {
             initialize();
         } catch (Exception ex) {
-            Log.getLogger().error("failure in CacheProxy constructor", ex);
+            ex.printStackTrace();
         }
     }
-
-    //     /**
-    //      * return the singleton instance
-    //      */    
-    //     public static CacheProxy getInstance()
-    //     {
-    //         if (_instance == null) {
-    //             _instance = new CacheProxy();
-    //         }
-    //         return _instance;
-    //     }
 
     /**
      *  Method initializes the default caches.
@@ -206,7 +185,7 @@ public class CacheProxy implements CacheService
         try {
             ConfigProps.getFiles().deleteDir(cacheDir);
         } catch (Exception ex) {
-            Log.getLogger().error("error in deleting files", ex);
+            ex.printStackTrace();
         }
     }
     
@@ -327,16 +306,6 @@ public class CacheProxy implements CacheService
     //-----------------------------------------------------------
     
     /**
-     *  Convenience method for printing the cache. Prints all the overloaded
-     *  <code>toString()</code> methods.
-     */
-    public void printCache() 
-    {
-        logger.info( "cacheTable " + _cacheTable.toString() );
-    } 
-
-    
-    /**
      *  Utility class for loading cache properties.
      */
     private class CachePropertiesLoader
@@ -348,7 +317,6 @@ public class CacheProxy implements CacheService
         private Hashtable _objectsTable = new Hashtable(); 
 
         private Hashtable _partnersTable = new Hashtable();
-
         
         private Properties cacheProperties = new Properties();
         
@@ -372,11 +340,8 @@ public class CacheProxy implements CacheService
             String caches = 
                 (String) ConfigProps.getProperty("com.blnz.fxpl.CacheProxy.caches"); 
             
-           
 
             if ( caches == null ) {
-                Log.getLogger().info("no caches defined");
-                // System.exit(1);
                 return;
             }
             
@@ -404,8 +369,6 @@ public class CacheProxy implements CacheService
                 _objectsTable.put(nextCache, nextPropTable);
             }
 
-            //            ConfigProps.getProperties().list(System.out);
-            
             String partners = 
                 (String) ConfigProps.getProperty("com.blnz.fxpl.CacheProxy.partners"); 
             
@@ -413,8 +376,6 @@ public class CacheProxy implements CacheService
             
 
             if ( partners == null ) {
-                Log.getLogger().info("no caches defined");
-                // System.exit(1);
                 return;
             }
             
@@ -429,7 +390,7 @@ public class CacheProxy implements CacheService
                             _partnerNotifiers.add(pn);
                         }
                     } catch (Exception ex) {
-                        Log.getLogger().warn(ex.getMessage(), ex);
+                        ex.printStackTrace();
                     }
                 }
             }
@@ -646,11 +607,9 @@ public class CacheProxy implements CacheService
                 }
                 
             } catch (Exception ex) {
-                Log.getLogger().warn("notified failed", ex);
+                ex.printStackTrace();
             }
-
         }
-
     }
 
 }

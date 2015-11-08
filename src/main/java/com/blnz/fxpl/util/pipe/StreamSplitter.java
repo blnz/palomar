@@ -2,8 +2,6 @@ package com.blnz.fxpl.util.pipe;
 
 import java.io.*;
 
-import com.blnz.fxpl.log.Log;
-
 /**
  * class is an <code>OutputStream</code>, but write's into more than one sink.
  * @see OutputStream
@@ -33,9 +31,6 @@ public class StreamSplitter extends FilterOutputStream
     public StreamSplitter(OutputStream out, String fileUrl) 
     {
         super(out); 
-        if (Log.getLogger().isDebugEnabled()) {
-            Log.getLogger().debug("StreamSplitter: gonna open second stream to: " + fileUrl);
-        }
         setOutStream2(fileUrl);    
     }
         

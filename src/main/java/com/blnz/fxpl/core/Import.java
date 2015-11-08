@@ -13,9 +13,6 @@ import com.blnz.fxpl.security.Security;
 import com.blnz.fxpl.security.User;
 import com.blnz.fxpl.util.ConfigProps;
 
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
-
 import com.blnz.xsl.om.Node;
 import com.blnz.xsl.om.ExtensionContext;
 
@@ -23,6 +20,7 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
+import java.util.logging.Logger;
 
 /**
  * imports the bindings in another file
@@ -39,11 +37,6 @@ public class Import extends FXRequestServerSide
 	throws Exception
     {
         context = extendContext(context);
-
-        Logger logger = Log.getLogger();
-        if (logger.isDebugEnabled()) {
-            logger.debug(getTagName() + ": eval() entry ");
-        }
 
         try {
             RepositoryItem item = super.getItem(context);
@@ -101,13 +94,13 @@ public class Import extends FXRequestServerSide
                     req = newXP.compile(parser, new InputSource(uri));
                     item.setApplicationObject("echoRequest", req);
                 } catch (Exception ex) {
-                    Log.getLogger().info("unable to compile and store request for " + item.getName());
+                    LOGGER.info("unable to compile and store request for " + item.getName());
                 }
 
             }
             context = ((FXRequestServerSide) req.getNodeExtension()).extendContext(context);
         } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
+            LOGGER.severe(ex.getMessage());
         }
 
         return context;

@@ -3,9 +3,6 @@ package com.blnz.fxpl.core;
 import com.blnz.fxpl.FXRequest;
 import com.blnz.fxpl.FXContext;
 
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
-
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;

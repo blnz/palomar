@@ -12,8 +12,10 @@ import com.blnz.fxpl.security.Security;
 import com.blnz.fxpl.security.User;
 import com.blnz.fxpl.util.ConfigProps;
 
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
+// import com.blnz.fxpl.log.Log;
+// import com.blnz.fxpl.log.Logger;
+
+import java.util.logging.Logger;
 
 import com.blnz.xsl.om.ExtensionContext;
 
@@ -39,11 +41,6 @@ public class ItemDelete extends FXRequestServerSide
         throws Exception
     {
         FXContext ctx = extendContext((FXContext) context);
-
-        Logger logger = Log.getLogger();
-        if (logger.isDebugEnabled()) {
-            logger.debug(getTagName() + ": eval() entry ");
-        }
 
         try {
             RepositoryItem item = super.getItem(ctx);
@@ -106,7 +103,7 @@ public class ItemDelete extends FXRequestServerSide
                     req = (FXRequest) newXP.compile(parser, new InputSource(uri)).getNodeExtension();
                     item.setApplicationObject("echoRequest", req);
                 } catch (Exception ex) {
-                    Log.getLogger().info("unable to compile and store request for " + item.getName());
+                    LOGGER.info("unable to compile and store request for " + item.getName());
                 }
 
             }
@@ -117,7 +114,7 @@ public class ItemDelete extends FXRequestServerSide
             }
 
         } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
+            LOGGER.warning( ex.toString());
             errorResponse(ex, responseTarget, ctx);
         }
     }

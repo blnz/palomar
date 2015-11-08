@@ -1,12 +1,7 @@
 package com.blnz.fxpl.core;
 
-import com.blnz.fxpl.FXHome;
 import com.blnz.fxpl.FXRequest;
 import com.blnz.fxpl.FXContext;
-import com.blnz.fxpl.XProcessor;
-
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
@@ -34,13 +29,9 @@ public class RequestReReader extends org.xml.sax.helpers.XMLFilterImpl
     
     public void parse(InputSource s) throws SAXException
     {
-        Logger logger = Log.getLogger();
-
         try {
             _req.eval(this, _ctxt);
         } catch (Exception ex) {
-            // TEMP
-            ex.printStackTrace();
             throw new SAXException(ex);
         }
         
@@ -96,7 +87,6 @@ public class RequestReReader extends org.xml.sax.helpers.XMLFilterImpl
     {
         //emit namespace declarations as attributes
         setNSDeclAsAttr(atts);
-        
         super.startElement( uri, localName, qName, atts);
     }
     

@@ -11,8 +11,6 @@ import java.io.Writer;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-import com.blnz.fxpl.log.Log;
-
 /**
  * a Reader which wraps another Reader, and
  * silently transforms XPSML syntax (looks kinda like java) to XML
@@ -113,7 +111,6 @@ public class XPSMLReader extends Reader
                     toBuf[toOffset++] = _pending[_pendStart++];
                     --toLength;
                     ++numSent;
-                    // debug("sent 1 with toLength = " + toLength + " of "  + toBuf[toOffset -1 ]);
                 }
                 _pendStart = 0;
                 _pendEnd = 0;
@@ -123,12 +120,10 @@ public class XPSMLReader extends Reader
                 if (numSent == 0) {
                     return -1;
                 } else {
-                    // debug ("sent [" + new String(toBuf, 0, numSent) + "]");
                     return numSent; 
                 }
             }
 
-            // debug("lastChar: {" + _nextCh + "} state: " + _fsmState);
             switch (_fsmState) {
                 
             case START:
@@ -254,8 +249,7 @@ public class XPSMLReader extends Reader
                     _pending[_pendEnd++] = '<';
                     _pending[_pendEnd++] = '/';
                     String tagname = _stags[--_stagIx];
-                    //                     debug("gonna end {" + tagname + "} length: " +
-                    //                                        tagname.length());
+
                     tagname.getChars(0, tagname.length(), _pending, _pendEnd);
                     _pendEnd += tagname.length();
                     newlines();
@@ -520,12 +514,10 @@ public class XPSMLReader extends Reader
 
                 }
                 // else ??
-
-                
                 break;
                 
             case POSTLOGUE:
-                // debug("postlogue gonna read toLength:" + toLength);
+
                 int more = _src.read(toBuf, toOffset, toLength);
                 
                 if (more <= 0) {
@@ -572,20 +564,14 @@ public class XPSMLReader extends Reader
         _src.close();
     }
 
-    private static final void debug(String msg)
-    {
-        if (false) {
-            Log.getLogger().info(msg);
-        }
-    }
-
     /**
      *
      */
     public static void main(String[] args)
     {
         if (args.length < 2) {
-            debug("need   file");
+            System.out.println("need input and output file names");
+            System.exit(1);
         }
         File f = new File(args[0]);
         File f2 = new File(args[1]);
@@ -602,9 +588,8 @@ public class XPSMLReader extends Reader
             }
             fr.close();
             fw.close();
-            debug("/nHow's that?");
+
         } catch (Exception ex) {
-            debug("whoops");
             ex.printStackTrace();
         }
     }

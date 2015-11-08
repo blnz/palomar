@@ -1,6 +1,5 @@
 package com.blnz.fxpl.security.impl;
 
-import com.blnz.fxpl.log.Log;
 import com.blnz.fxpl.security.PermissionSet;
 import com.blnz.fxpl.security.PermBits;
 
@@ -57,15 +56,4 @@ public class PermissionSetImpl implements PermissionSet
         return _groupId;
     }
 
-    // debugging only
-    public void print() 
-    {
-        Log.getLogger().info("ownerId=" + _ownerId);
-        Log.getLogger().info(", groupId=" + _groupId);
-        if (_permissions != null) {
-            Log.getLogger().info(", permissions=" + _permissions.toInt());
-        } else {
-            Log.getLogger().info(", permissions=null");
-        }
-    }
 }

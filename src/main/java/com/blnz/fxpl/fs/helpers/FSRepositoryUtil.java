@@ -3,10 +3,6 @@ package com.blnz.fxpl.fs.helpers;
 
 import javax.activation.MimetypesFileTypeMap;
 
-// import javax.xml.parsers.DocumentBuilder;
-// import javax.xml.parsers.DocumentBuilderFactory;
-// import javax.xml.parsers.ParserConfigurationException;
-
 import java.net.URL;
 
 import com.blnz.fxpl.security.Security;
@@ -22,7 +18,6 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
-import com.blnz.fxpl.log.Log;
 import com.blnz.fxpl.xform.XForm;
 
 import com.blnz.fxpl.fs.RepositoryItem;
@@ -382,8 +377,6 @@ public class FSRepositoryUtil
                     }
                     os.close();
                     
-                    Log.getLogger().info("inserted text: " + pathParts[0] + "/" + pathParts[1]);
-
                 } else if (RepositoryItem.BINARY == itemType) {
 
                     child = item.createChildBinaryItem(user, pathParts[1], mimeType);
@@ -394,38 +387,13 @@ public class FSRepositoryUtil
                         os.write(buf, 0, len);
                     }
                     os.close();
-                    Log.getLogger().info("inserted binary: " + pathParts[0] +
-						"/" + pathParts[1]);
 
                 } else if (RepositoryItem.XML == itemType) {
 
                     child = item.createChildXMLItem(user, pathParts[1],
                                                     mimeType);
 
-                    // FIXME: get another way of making tempory copy
-                    
-		    //                     IrisFileProxy ifp = IrisResourceBroker.getBroker().getFileProxy();
-		    //                     File tempFile = ifp.createTempFile();
-                    
                     try {
-			
-			// 			//                         FileOutputStream fos = new FileOutputStream(tempFile);
-			// 			InputStream is = new FilterInputStream(js) {
-			// 				public void close(){}
-			// 			    };
-			// 			//                         //make a verbatim copy to the temp
-			// 			//                         transportItem( is , fos );
-                        
-			// 			//                         FileInputStream fis = new FileInputStream(tempFile);
-			// 			//                        InputSource iSrc = new InputSource(fis);
-			//                         InputSource iSrc = new InputSource(is);
-			//                         XMLReader xr = 
-			//                             TransformServiceHome.getTransformService().createInputSourceReader(iSrc);
-			//                         ContentHandler ch = child.openXMLWriter();
-			//                         xr.setContentHandler(ch);
-			
-			//                         xr.parse(iSrc);
-			
 			
 			OutputStream os = child.getOutputStream();
 			byte[] buf = new byte[256];
@@ -434,29 +402,20 @@ public class FSRepositoryUtil
 			    os.write(buf, 0, len);
 			}
 			os.close();
-			
-			//                         OutputStream os = child.getOutputStream();
-			//                         //make a verbatim copy of all the bytes
-			//                         transportItem( new FileInputStream(tempFile) , os );
-                        
-			//                         if (tempFile != null && tempFile.exists()){
-			//                             tempFile.delete();
-			//                         }
                         
                     } catch (Exception e) {
-                        Log.getLogger().error("store failed beacuse: " +
-						     e.getMessage() +
-						     " for " + 
-						     pathParts[0] +
-						     "/" + pathParts[1]);
+                        
+                        //                        Log.getLogger().error("store failed beacuse: " +
+			//			     e.getMessage() +
+			//			     " for " + 
+			//			     pathParts[0] +
+                        //				     "/" + pathParts[1]);
 			//                         if (tempFile != null && tempFile.exists()) {
 			//                             tempFile.delete();
 			//                         }
                         throw e;
                     }
-                    
-                    Log.getLogger().info("inserted XML: " + pathParts[0] +
-						"/" + pathParts[1]);
+
                 } else {
                     throw new FsException("Invalid item type for " + entryName);
                 }

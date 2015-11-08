@@ -20,9 +20,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.NamespaceSupport;
 
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
-
 import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.Vector;

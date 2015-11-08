@@ -31,9 +31,6 @@ import com.blnz.fxpl.xform.TransformService;
 import com.blnz.fxpl.xform.XForm;
 import com.blnz.fxpl.xform.impl.OutStreamContentHandler;
 
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
-
 import com.blnz.xsl.om.ExtensionContext;
 import java.io.Reader;
 
@@ -66,11 +63,6 @@ public class ItemPut extends FXRequestServerSide {
 
         boolean inheritedTransaction = false;
 
-        Logger logger = Log.getLogger();
-        if (logger.isDebugEnabled()) {
-            logger.debug(getTagName() + ": entry");
-        }
-
         FXContext ctx = extendContext((FXContext) context);
         if (ctx == null) {
             throw new Exception("Null context");
@@ -102,11 +94,6 @@ public class ItemPut extends FXRequestServerSide {
 
             String cds = (String) ctx.get("createFolders");
             boolean createDirs = ("yes".equals(cds) || "true".equals(cds));
-
-            if (logger.isDebugEnabled()) {
-                logger.debug(getTagName() + ": path={" + path + "}, name={"
-                        + name + "}");
-            }
 
             String[] pparts = RepositoryUtil.splitPath(RepositoryUtil
                     .normalizePath(path, name));
@@ -209,10 +196,7 @@ public class ItemPut extends FXRequestServerSide {
                     RepositoryUtil.normalizePath(pparts[0], pparts[1]));
             startElement("success", atts, responseTarget);
             endElement("success", responseTarget);
-            if (logger.isDebugEnabled()) {
-                logger.debug(getTagName() + ": exit, path={" + path
-                        + "}, name={" + name + "}");
-            }
+
         } catch (Exception ex) {
 
             ex.printStackTrace();

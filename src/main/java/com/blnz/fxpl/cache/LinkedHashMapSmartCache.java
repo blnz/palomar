@@ -12,8 +12,6 @@ import java.util.Properties;
 import java.util.Vector;
 import java.util.Collections;
 
-import com.blnz.fxpl.log.Log;
-
 public class LinkedHashMapSmartCache  extends AbstractCache {
 
   private Map hashMapCache = null;
@@ -86,9 +84,8 @@ public class LinkedHashMapSmartCache  extends AbstractCache {
       
       try {
           holderClass = Class.forName(objectHolderClassProp);
-      } catch (ClassNotFoundException cnfE2) {
-          Log.getLogger().error("unable to load  " +
-                                       objectHolderClassProp , cnfE2 ); 
+      } catch (ClassNotFoundException ex) {
+          ex.printStackTrace();
       }
       
       int capacity = (int) Math.ceil(getMaxCacheSize() / 0.50f) + 1;
@@ -505,16 +502,12 @@ public class LinkedHashMapSmartCache  extends AbstractCache {
   /**
    * removes all objects from the cache
    */
-  public void clear()
-  {
-      Log.getLogger().info( "[SmartCache][clear]" );
-      this.hashMapCache.clear();
-     
-          setRefreshTime(System.currentTimeMillis());
-          Log.getLogger().info( "[SmartCache][clear] done" );
-
-  }            
-  
+    public void clear()
+    {
+        this.hashMapCache.clear();
+        setRefreshTime(System.currentTimeMillis());
+    }            
+    
   /**
    *  Method for clearing a particular type of cache.
    *  @deprecated
@@ -524,26 +517,6 @@ public class LinkedHashMapSmartCache  extends AbstractCache {
       clear();
   }
   
-  /**
-   *  Convinience method for testing.
-   */
-  public void printCache()
-  {
-      
-      Log.getLogger().debug( "\n\nCache size =  "+ hashMapCache.size() );
-      Log.getLogger().debug( " Printing the key values pairs" );
-      Log.getLogger().debug( " ----------------------------- " );
-      //Enumeration totalKeys = typeMaps.keys();
-      System.out.println(hashMapCache);
-  }
-
-  private static final void debug(String msg) 
-  {
-      if (DEBUG) {
-          Log.getLogger().debug("SmartCache: " + msg);
-      }
-  }
-
   
   public String toString()
   {
@@ -552,7 +525,5 @@ public class LinkedHashMapSmartCache  extends AbstractCache {
       temp.append(" specific cache = "+ hashMapCache );
       return temp.toString();
   }
-  
-  
 
 }

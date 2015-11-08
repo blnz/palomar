@@ -1,8 +1,8 @@
 package com.blnz.fxpl.util.pipe;
 
-import com.blnz.fxpl.log.Log;
-
 import java.io.*;
+
+import java.util.logging.Logger;
 
 /**
  * wraps an OutputStream for UTF-8 encoded characters 
@@ -12,6 +12,7 @@ import java.io.*;
  */
 public class LazyBufferedReaderWriter extends OutputStream 
 {
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final String ENCODING = "UTF8";
 
     /**
@@ -100,8 +101,8 @@ public class LazyBufferedReaderWriter extends OutputStream
                 toWrite.deleteOnExit();
             } 
             _out = new BufferedOutputStream( new FileOutputStream(toWrite) );
-        } catch( Exception setOSEx) {
-            Log.getLogger().error(setOSEx.getMessage());
+        } catch( Exception ex) {
+            ex.printStackTrace();
         }
     }
     
@@ -243,7 +244,7 @@ public class LazyBufferedReaderWriter extends OutputStream
         try {
             return new StringReader ( ( new String(_cacheBuff, ENCODING)).trim() );
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOGGER.severe(ex.toString());
             return null;
         }
     }
@@ -264,7 +265,7 @@ public class LazyBufferedReaderWriter extends OutputStream
                 FileInputStream fi = new FileInputStream(f);
                 r = new BufferedReader(new InputStreamReader(fi, ENCODING));
             } catch (Exception ex) {
-                Log.getLogger().error("unable to get Reader", ex);
+                LOGGER.severe("unable to get Reader: " + ex.toString());
             }
         }
         return r;
@@ -282,7 +283,7 @@ public class LazyBufferedReaderWriter extends OutputStream
         try {
             flush();
         } catch (IOException ioE) {
-            Log.getLogger().error("error closing", ioE);
+            LOGGER.severe("error closing:" +  ioE.toString());
         }
         if (!isInMemory()) {
             _out.close();  // we'll let any exception through
@@ -306,24 +307,12 @@ public class LazyBufferedReaderWriter extends OutputStream
             }
             _cacheBuff = null;
         } catch(Exception cleanEx) {
-            Log.getLogger().error("unable to clean", cleanEx);
+            LOGGER.severe("unable to clean: " + cleanEx.toString());
         } finally {
             //System.gc(); // just a try
         }
     }
     
-    private void forceDelFile(File toDelete)
-    {
-        try {
-            Runtime rt = Runtime.getRuntime();
-            String cmdarr[] = {"del",toDelete.toString()};
-            Process p = rt.exec(cmdarr);
-            p.waitFor();
-        } catch( Exception e ) {
-            Log.getLogger().error("unable to del file " + toDelete.toString(), e);
-        }
-    }
-
 }
 
 

@@ -5,8 +5,6 @@ import com.blnz.fxpl.fs.FsRepository;
 import com.blnz.fxpl.fs.RepositoryItem;
 import com.blnz.fxpl.fs.FsException;
 
-import com.blnz.fxpl.log.Log;
-
 import com.blnz.fxpl.security.PermBits;
 
 import com.blnz.fxpl.fs.RepositoryUtil;
@@ -44,11 +42,15 @@ import java.io.ByteArrayInputStream;
 import java.io.OutputStream;
 
 import com.blnz.fxpl.fs.helpers.FSRepositoryUtil;
+import java.util.logging.Logger;
+
 /**
  * an entity object representing a repository item
  */
 public class FSRepositoryItem implements RepositoryItem
 {
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     // what repository do we belong to?
     protected  FSRepositoryImpl _repository = null;
     
@@ -1336,7 +1338,7 @@ public class FSRepositoryItem implements RepositoryItem
         try {
             d = dbDateFormat.parse(dateStr, new ParsePosition(0));
         } catch (Exception ex) {
-            Log.getLogger().warn("couldn't parse date: " + dateStr);
+            LOGGER.warning("couldn't parse date: " + dateStr);
             return dateStr;
         }
 
@@ -1357,7 +1359,7 @@ public class FSRepositoryItem implements RepositoryItem
         try {
             d = dbDateFormat.parse(dateStr, new ParsePosition(0));
         } catch (Exception ex) {
-            Log.getLogger().warn("couldn't parse date: " + dateStr);
+            LOGGER.warning("couldn't parse date: " + dateStr);
             return dateStr;
         }
         rfc1123DateFormat.setTimeZone(new SimpleTimeZone(0,"GMT"));

@@ -1,13 +1,15 @@
 package com.blnz.fxpl.fs;
 
-import com.blnz.fxpl.log.Log;
 import com.blnz.fxpl.util.ConfigProps;
+
+import java.util.logging.Logger;
 
 /**
  *  The home interface for repository.
  */
 public class FS
 {
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static FsRepository _implementation = null;
     
     /**
@@ -40,8 +42,7 @@ public class FS
             _implementation.startServices();
 
         } catch (Throwable ex) {
-            Log.getLogger().warn("FsRepositoryHome error loading class " + implName,
-                                 ex);
+            LOGGER.severe("FsRepositoryHome error loading class " + implName + " " + ex.toString());
         }
     }
 }

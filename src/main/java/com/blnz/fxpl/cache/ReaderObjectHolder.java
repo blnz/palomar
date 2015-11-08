@@ -1,12 +1,8 @@
 package com.blnz.fxpl.cache;
 
-
 import com.blnz.fxpl.util.ConfigProps;
 import com.blnz.fxpl.util.pipe.StreamSplitter;
 import com.blnz.fxpl.util.pipe.LazyBufferedReaderWriter;
-
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
 
 import java.io.*;
 
@@ -63,7 +59,7 @@ public class ReaderObjectHolder extends ObjectHolder
                     ConfigProps.getFiles().createUniqueFilename(null);
                 String fileUrl = cacheDir + File.separator + cacheFile; 
                 setFileUrl(fileUrl);
-                //	    System.err.println( " fileUrl = "+ fileUrl);
+
                 File f = new File(fileUrl);
                 lazyBuffReaderWriter = new LazyBufferedReaderWriter(f);
                 
@@ -71,7 +67,7 @@ public class ReaderObjectHolder extends ObjectHolder
                 os = new StreamSplitter((OutputStream) mutable, 
                                         lazyBuffReaderWriter);
             } catch (Exception ex) {
-                Log.getLogger().error("error setting object", ex);
+                ex.printStackTrace();
             }
             super.setObject(lazyBuffReaderWriter); 
             return os;
@@ -86,9 +82,6 @@ public class ReaderObjectHolder extends ObjectHolder
      * get the buffer size from properties
      * @return buffer size in bytes
      */
-    // FIXME(Ravi): can be made intelligent in returning 
-    //  variable sizes based on 
-    // the runtime heap size.
     private int getBuffSizeProp()
     {
         String temp = ConfigProps.getProperty("com.snapbridge.fed.cache.MaxBuffSize","8000");
@@ -118,10 +111,6 @@ public class ReaderObjectHolder extends ObjectHolder
     
         
     /** returns a Reader for a stream which we cached to the fileSystem */
-    // FIXME(Ravi): write a meaningful exception where the clients can catch it
-    // and if possible reload the object.
-    // Scenario : an object is cached and while reading if say an IO Excptn has occured
-    // then the client can supress it and reload it instead of propagating it to the end user.
     public Object getObject()
     {
         Object obj = super.getObject();
@@ -132,8 +121,8 @@ public class ReaderObjectHolder extends ObjectHolder
 	Reader r = null;
 	try {
 	    r = ( (LazyBufferedReaderWriter) super.getObject() ).getReader();
-	} catch( Exception readEx ) {
-            Log.getLogger().error("error in getObject", readEx);
+	} catch( Exception ex ) {
+            ex.printStackTrace();
 	}
 	return r;
     }
@@ -154,6 +143,3 @@ public class ReaderObjectHolder extends ObjectHolder
 	_fileUrl = null;
     }
 }
-
-
-

@@ -1,9 +1,4 @@
-// $Id: SmartCache.java 844 2007-08-03 00:06:32Z blindsey $
-
 package com.blnz.fxpl.cache;
-
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -112,9 +107,8 @@ public class SmartCache extends AbstractCache
         
         try {
             holderClass = Class.forName(objectHolderClassProp);
-        } catch (ClassNotFoundException cnfE2) {
-            Log.getLogger().error("unable to load  " +
-                                         objectHolderClassProp , cnfE2 ); 
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
 
         createDefaultPolicies();
@@ -687,8 +681,7 @@ public class SmartCache extends AbstractCache
                 Holder holderTBR = getHolder(objectKey);
 
                 if (holderTBR == null) {
-                    Log.getLogger().info( " No cached object found for " + 
-                                                 objectKey );
+                    // 
                 } else {
                     // synchronized(_specificCache) { //moving this lock to before containsKey() check..
                     Holder myPrevHolder = holderTBR.getPrev();
@@ -801,7 +794,7 @@ public class SmartCache extends AbstractCache
      */
     public void clear()
     {
-        Log.getLogger().info( "[SmartCache][clear]" );
+
         synchronized( _specificCache ) {  
             Iterator holderKeys = _specificCache.keySet().iterator();
             while(holderKeys.hasNext()){
@@ -815,7 +808,7 @@ public class SmartCache extends AbstractCache
             setFirst(null);
             setLast(null);
             setRefreshTime(System.currentTimeMillis());
-            Log.getLogger().info( "[SmartCache][clear] done" );
+
         }
     }            
     
@@ -827,36 +820,6 @@ public class SmartCache extends AbstractCache
     {
         clear();
     }
-    
-    /**
-     *  Convinience method for testing.
-     */
-    public void printCache()
-    {
-        
-        Log.getLogger().debug( "\n\nCache size =  "+ _specificCache.size() );
-        Log.getLogger().debug( " Printing the key values pairs" );
-        Log.getLogger().debug( " ----------------------------- " );
-        //Enumeration totalKeys = typeMaps.keys();
-        synchronized(_specificCache){
-            for (Iterator keysIterator = getKeys(_specificCache); 
-                 keysIterator.hasNext() ;
-                 ) {
-                String nextKey = ( (String)keysIterator.next() );
-                Log.getLogger().debug( " TYPE = " + nextKey);
-                Log.getLogger().debug( " Values are \n" + 
-                                              _specificCache.get( nextKey ) );      
-            }
-        }
-    }
-
-    private static final void debug(String msg) 
-    {
-        if (DEBUG) {
-            Log.getLogger().debug("SmartCache: " + msg);
-        }
-    }
-
     
     public String toString()
     {

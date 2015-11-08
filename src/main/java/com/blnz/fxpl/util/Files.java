@@ -1,7 +1,5 @@
 package com.blnz.fxpl.util;
 
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
 import java.util.Random;
 import java.io.File;
 
@@ -10,9 +8,6 @@ import java.io.File;
  */
 public class Files
 {
-    // switch to turn on/off the debugging stream
-    private static boolean DEBUG = false;
-
     private String _rootPath;
 
     private String _fullTextIndexPath;
@@ -20,8 +15,6 @@ public class Files
     private String _dtdPath;
     private String _cachePath;
     private String _tempPath;
-
-    protected static Logger logger = null;  // a place to report exceptions
 
     /**
      * have a protected constructor so that no one outside the package
@@ -33,7 +26,6 @@ public class Files
 
         // FIXME: new property names
 
-        logger = Log.getLogger();
 	String prop = "Files.rootPath";
 	_rootPath = ConfigProps.getProperty(prop, ".");
 
@@ -49,11 +41,6 @@ public class Files
 	String tempSubpath = ConfigProps.getProperty(prop, "tmp");
 	_tempPath = _rootPath + File.separator + tempSubpath;
 
-	debug("_rootPath=" + _rootPath);
-	debug("_xfsPath=" + _xfsPath);
-
-	debug("_cachePath=" + _cachePath);
-	debug("_tempPath=" + _tempPath);
     }
     
     /** 
@@ -164,7 +151,7 @@ public class Files
 	// use the name of the current thread (which is unique) to create
 	// a unique seed
 	int seed = Thread.currentThread().getName().hashCode();
-	// debug("seed=" + seed);
+
 	Random random = new Random(seed);
 	
 	if (userId == null) {
@@ -212,7 +199,6 @@ public class Files
             if (files[i].isDirectory()) {
                 deleteDir(files[i].getAbsolutePath());
             } else {
-		debug("Deleting " + files[i].getAbsolutePath());
                 if (!files[i].delete()) {
                     throw new Exception("Unable to delete file " + files[i].getAbsolutePath());
                 }
@@ -220,16 +206,10 @@ public class Files
 	}
 
 	// remove the directory itself
-        debug("Deleting directory " + dir.getAbsolutePath());
 	if (!dir.delete()) {
 	    throw new Exception("Unable to delete directory " + dir.getAbsolutePath());
 	}
     }
 
-    private static void debug(String msg)
-    {
-	if (DEBUG) {
-            logger.debug( msg );
-	}
-    }
+
 }

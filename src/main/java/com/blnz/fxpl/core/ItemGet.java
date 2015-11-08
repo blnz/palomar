@@ -6,8 +6,6 @@ import com.blnz.fxpl.FXContext;
 import com.blnz.fxpl.FXException;
 import com.blnz.fxpl.security.Security;
 import com.blnz.fxpl.security.User;
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
 
 import com.blnz.xsl.om.ExtensionContext;
 
@@ -31,11 +29,6 @@ public class ItemGet extends FXRequestServerSide
     {
         FXContext ctx = extendContext((FXContext) context);
 
-        Logger logger = Log.getLogger();
-        if (logger.isDebugEnabled()) {
-            logger.debug(getTagName() + ": eval() entry ");
-        }
-        
         boolean isBinary = toBoolean((String)context.get("asBinary"));
         
         try {
@@ -45,13 +38,13 @@ public class ItemGet extends FXRequestServerSide
             ctx.put("ctx:commandItem", item.getFullPath()); 
             FXRequest req = null;
  
-           User user = getUser(ctx);
+            User user = getUser(ctx);
             
-           if (! Security.getSecurityService().checkRead(user, item)) {
+            if (! Security.getSecurityService().checkRead(user, item)) {
                 throw new FXException("No READ permission for user " + 
-                                       user.getUsername() + " on item: " + 
-                                       item.getDirNamePath() + "/" +
-                                       item.getName() );
+                                      user.getUsername() + " on item: " + 
+                                      item.getDirNamePath() + "/" +
+                                      item.getName() );
             }
             if (isBinary) {
                 OutputStream sink = (OutputStream) context.get("stdout");
@@ -75,16 +68,15 @@ public class ItemGet extends FXRequestServerSide
                 } catch (Exception ex) {
                     // ex.printStackTrace();
                     throw new FXException("failed to open XMLReader " + 
-                                           " on item: " + 
-                                           item.getDirNamePath() + "/" +
-                                           item.getName() );
+                                          " on item: " + 
+                                          item.getDirNamePath() + "/" +
+                                          item.getName() );
                 }
                 parser.setContentHandler(responseTarget);
                 parser.parse(item.getBaseURI());
             }            
    
         } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
             errorResponse(ex, responseTarget, ctx);
         }
     }

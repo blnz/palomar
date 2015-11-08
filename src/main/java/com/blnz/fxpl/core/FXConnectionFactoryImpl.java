@@ -9,8 +9,6 @@ import java.net.URL;
 
 import java.util.Hashtable;
 
-import com.blnz.fxpl.log.Logger;
-
 import com.blnz.fxpl.FXConnection;
 import com.blnz.fxpl.FXConnectionFactory;
 import com.blnz.fxpl.FXContext;
@@ -20,12 +18,13 @@ import com.blnz.fxpl.XProcessor;
 import com.blnz.fxpl.util.ConfigProps;
 import com.blnz.fxpl.xform.XForm;
 import com.blnz.fxpl.xform.TransformService;
-import com.blnz.fxpl.log.Log;
 
 import com.blnz.xsl.om.NodeExtensionFactory;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
+
+import java.util.logging.Logger;
 
 /**
  * Simple, Java API to the FX Processor.
@@ -33,18 +32,17 @@ import org.xml.sax.XMLReader;
 public class FXConnectionFactoryImpl 
     implements FXConnectionFactory
 {
+    protected final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     // a cache of named service implementations
     // FIXME: make this a LRU cache
     private Hashtable<String, FXConnection> _svcs = new Hashtable<String, FXConnection>();
-
-    private Logger _logger = null;
 
     private NodeExtensionFactory _localCommandFact = null;
     private NodeExtensionFactory _localResponseFact = null;
 
     public FXConnectionFactoryImpl()
     {
-        _logger = Log.getLogger();
+
     }
 
     /**
@@ -73,11 +71,6 @@ public class FXConnectionFactoryImpl
      */
     public XProcessor getXProcessor(String svcName)
     {
-        
-        if (_logger.isDebugEnabled()) {
-            _logger.debug("FXConnectionFactory::getXProcessor(\"" + 
-                          svcName + "\")");
-        }
         if (_localCommandFact == null) {
             buildCommandFactories();
         }
@@ -93,8 +86,7 @@ public class FXConnectionFactoryImpl
                 Class c = Class.forName(classname);
                 xp = (XProcessorImpl) c.newInstance();
             } catch (Exception ex) {
-                Log.getLogger().warn("cannot load FXProcessor: " + 
-                                            classname, ex);
+                LOGGER.warning("cannot load FXProcessor: " + classname +  "  " + ex.toString());
             }
         }
         
@@ -159,7 +151,7 @@ public class FXConnectionFactoryImpl
             buildFactory((FXElementFactory)_localResponseFact, coreTagMapURL, defaultResponseMap);
             //            System.out.println("FXConnectionFactoryImpl:: built 2 factories 1");
         } catch (RuntimeException ex) {
-            Log.getLogger().warn("failed to load core TagMap: " + coreTagMapURL + " -- " + ex.getMessage());
+            LOGGER.warning("failed to load core TagMap: " + coreTagMapURL + " -- " + ex.getMessage());
         }
         
         URL tagMapURL = ConfigProps.getResource(localTagMap, ConfigProps.propsBaseURL());
@@ -169,7 +161,7 @@ public class FXConnectionFactoryImpl
                 buildFactory((FXElementFactory)_localResponseFact, tagMapURL, defaultResponseMap);
 //                System.out.println("FXConnectionFactoryImpl:: built 2 factories 2");
             } catch (RuntimeException ex) {
-                Log.getLogger().warn("failed to load secondary TagMap " + tagMapURL + " -- " + ex.getMessage());
+                LOGGER.warning("failed to load secondary TagMap " + tagMapURL + " -- " + ex.getMessage());
             }
         }        
     }

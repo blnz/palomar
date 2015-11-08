@@ -20,12 +20,6 @@ import com.blnz.fxpl.fs.FsRepository;
 
 import com.blnz.fxpl.xform.XForm;
 
-import com.blnz.fxpl.log.Log;
-
-// import org.xmlecho.palomar.cache.Cache;
-// import org.xmlecho.palomar.cache.CacheProxy;
-
-
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -459,7 +453,7 @@ public class CompoundRepositoryImpl extends FSRepositoryImpl
             try {
                 _cache.put(key, repositoryItem);
             } catch (Exception ex) {
-                Log.getLogger().warn(ex.getMessage(), ex);
+                ex.printStackTrace();
             }
         }
     }

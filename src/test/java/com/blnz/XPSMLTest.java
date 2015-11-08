@@ -23,7 +23,6 @@ import java.io.StringReader;
  */
 public class XPSMLTest {
     
-
     /**
      * Initialize service before any tests are run.
      * @throws Exception

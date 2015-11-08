@@ -7,7 +7,6 @@ import com.blnz.fxpl.fs.RepositoryItem;
 import com.blnz.fxpl.core.SimpleElementFactory;
 
 
-import com.blnz.fxpl.log.Log;
 import com.blnz.xsl.tr.LoadContext;
 
 import com.blnz.xsl.om.Node;
@@ -30,6 +29,8 @@ import javax.xml.parsers.SAXParserFactory;
 
 import javax.xml.transform.Source;
 
+import java.util.logging.Logger;
+
 import java.io.Writer;
 import java.io.OutputStream;
 
@@ -39,6 +40,7 @@ import java.io.OutputStream;
  */
 public class BasicTransformServiceHomeImpl implements TransformService
 {
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private SAXParserFactory _rdrFactory = null;
 
@@ -396,8 +398,7 @@ public class BasicTransformServiceHomeImpl implements TransformService
                 rdr.setFeature("http://xml.org/sax/features/namespaces", true);
             }
         } catch (Exception ex) {
-            Log.getLogger().warn("JAXP cannot get XMLReader for us", 
-                                 ex);
+            LOGGER.warning("JAXP cannot get XMLReader for us:" + ex.toString());
         }
         return rdr;
     }

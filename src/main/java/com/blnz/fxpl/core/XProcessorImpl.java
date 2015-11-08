@@ -13,9 +13,6 @@ import com.blnz.xsl.om.NodeExtensionFactory;
 import com.blnz.xsl.sax2.SAXTwoOMBuilder;
 import com.blnz.xsl.tr.LoadContext;
 
-import com.blnz.fxpl.log.Logger;
-import com.blnz.fxpl.log.Log;
-
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
 import org.xml.sax.ContentHandler;
@@ -46,8 +43,6 @@ import java.io.IOException;
  */
 public class XProcessorImpl implements XProcessor
 {
-
-    protected Logger _logger = null;
     protected FXRequest _request = null;
 
     protected SimpleElementFactory _myNodeExtensionFactory = null;
@@ -84,12 +79,6 @@ public class XProcessorImpl implements XProcessor
      */
     private void init(SimpleElementFactory factory)
     {
-        try {
-            _logger = Log.getLogger();
-        } catch ( Exception ex) {
-            ex.printStackTrace();
-            // fatal maybe?
-        }
         _myNodeExtensionFactory = factory;
         _myResponseFactory = factory;
     }

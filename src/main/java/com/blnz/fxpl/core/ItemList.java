@@ -7,8 +7,6 @@ import com.blnz.fxpl.fs.FsException;
 
 import com.blnz.fxpl.FXContext;
 import com.blnz.fxpl.security.User;
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
 
 import com.blnz.xsl.om.ExtensionContext;
 
@@ -16,7 +14,7 @@ import org.xml.sax.ContentHandler;
 
 
 /**
- * fetch an xml document from the repository, and evaluate it as FXPL
+ * fetct the metadata for an item or folder in the repository
  */
 public class ItemList extends FXRequestServerSide
 {
@@ -27,11 +25,6 @@ public class ItemList extends FXRequestServerSide
         throws Exception
     {
         FXContext ctx = extendContext((FXContext) context);
-
-        Logger logger = Log.getLogger();
-        if (logger.isDebugEnabled()) {
-            logger.debug(getTagName() + ": eval() entry ");
-        }
 
         try {
             FsRepository repo = null;

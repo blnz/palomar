@@ -19,9 +19,6 @@ import com.blnz.xsl.om.ExtensionContext;
 import com.blnz.xsl.om.NodeIterator;
 import com.blnz.xsl.om.Name;
 
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
-
 import com.blnz.fxpl.security.Security;
 import com.blnz.fxpl.security.SecurityService;
 import com.blnz.fxpl.security.User;
@@ -46,16 +43,19 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.PrintWriter;
 
+import java.util.logging.Logger;
+
+
 /**
  * Base class for server-side implementation of FX request objects.
  */
-//public class FXRequestServerSide extends FXRequestImpl implements ExprContext
 public class FXRequestServerSide extends FXRequestImpl
 
 {
+    protected final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     protected static SecurityService _sec = null;
 
-    protected static Logger _logger;
     public static boolean DEBUG = false;
 
     //    public static boolean DEBUG = true;
@@ -563,7 +563,7 @@ public class FXRequestServerSide extends FXRequestImpl
             context.sendStackTrace((FXException)echoEx, target);
 
             // always ?
-            Log.getLogger().error(echoEx.getMessage());
+            LOGGER.severe(echoEx.getMessage());
             
         } catch (SAXException e) {
             log(e);
@@ -641,7 +641,7 @@ public class FXRequestServerSide extends FXRequestImpl
     protected static final void log(Exception ex) 
     {
         try {
-            Log.getLogger().error("error", ex);
+            LOGGER.warning(ex.toString());
         } catch (Exception e) {
             // FIXME: fatal?
         }

@@ -4,8 +4,6 @@ import com.blnz.fxpl.FXRequest;
 import com.blnz.fxpl.FXContext;
 
 import com.blnz.fxpl.xform.XForm;
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
 
 import com.blnz.xsl.om.ExtensionContext;
 import com.blnz.xsl.sax2.SAXTwoOMBuilder;
@@ -26,11 +24,7 @@ public class MapImpl extends FXRequestServerSide {
 
     public void eval(ContentHandler responseTarget, ExtensionContext context)
             throws Exception {
-        Logger logger = Log.getLogger();
 
-        if (logger.isDebugEnabled()) {
-            logger.debug(getTagName() + ": eval() entry ");
-        }
         FXContext ctx = extendContext((FXContext) context);
 
         if (ctx == null) {

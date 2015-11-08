@@ -12,25 +12,18 @@ import com.blnz.fxpl.security.Security;
 import com.blnz.fxpl.security.User;
 import com.blnz.fxpl.util.ConfigProps;
 
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
-
 import com.blnz.xsl.om.ExtensionContext;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
-
 /**
  * fetch an xml document from the repository, and evaluate it as FXPL
  */
 public class ItemEval extends FXRequestServerSide
 {
-
-
     private boolean DEBUG = false;
-
 
     /**
      * evaluate the request
@@ -39,11 +32,6 @@ public class ItemEval extends FXRequestServerSide
 	throws Exception
     {
         FXContext ctx = extendContext((FXContext) context);
-
-        Logger logger = Log.getLogger();
-        if (logger.isDebugEnabled()) {
-            logger.debug(getTagName() + ": eval() entry ");
-        }
 
         try {
             RepositoryItem item = super.getItem(ctx);
@@ -94,10 +82,9 @@ public class ItemEval extends FXRequestServerSide
                     // FIXME: ensure item is XML before trying ?
                     parser = item.openXMLReader();
                 } catch (Exception ex) {
-                    throw new FsException("failed to open XMLReader " + 
-                                           " on item: " + 
-                                           item.getDirNamePath() + "/" +
-                                           item.getName() );
+                    throw new FsException("failed to open XMLReader on item: " + 
+                                          item.getDirNamePath() + "/" +
+                                          item.getName() );
                 }
                 
                 newXP = FXHome.getXProcessor("local");
@@ -106,9 +93,8 @@ public class ItemEval extends FXRequestServerSide
                     req = (FXRequest) newXP.compile(parser, new InputSource(uri)).getNodeExtension();
                     item.setApplicationObject("echoRequest", req);
                 } catch (Exception ex) {
-                    Log.getLogger().info("unable to compile and store request for " + item.getName());
+                    LOGGER.info("unable to compile and store request for " + item.getName());
                 }
-
             }
             if ( req == null) {
                 newXP.eval(ctx, parser, new InputSource(uri), responseTarget);
@@ -117,7 +103,7 @@ public class ItemEval extends FXRequestServerSide
             }
 
         } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
+            LOGGER.severe(ex.toString());
             errorResponse(ex, responseTarget, ctx);
         }
     }

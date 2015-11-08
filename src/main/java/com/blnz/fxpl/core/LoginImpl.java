@@ -6,9 +6,6 @@ import com.blnz.fxpl.security.User;
 
 import com.blnz.fxpl.*;
 
-import com.blnz.fxpl.log.Log;
-import com.blnz.fxpl.log.Logger;
-
 import com.blnz.xsl.om.Node;
 import com.blnz.xsl.om.ExtensionContext;
 
@@ -74,7 +71,6 @@ public class LoginImpl extends FXRequestServerSide
             } else {
 
                 // FIXME: temp hack
-                Log.getLogger().warn("putting bogus user in context");
                 String userID = "42";
                 atts.addAttribute("", "userID", "userID", "CDATA", userID);
                 atts.addAttribute("", "path", "path", "CDATA", "/");
@@ -90,7 +86,7 @@ public class LoginImpl extends FXRequestServerSide
 
         } else {
             String userID = user.getID();
-            Log.getLogger().info("putting userID: " + userID + " into context");
+
             atts.addAttribute("", "userID", "userID", "CDATA", userID);
             atts.addAttribute("", "path", "path", "CDATA", "/");
             atts.addAttribute("", "connectionID", "connectionID", "CDATA", sessionID);
