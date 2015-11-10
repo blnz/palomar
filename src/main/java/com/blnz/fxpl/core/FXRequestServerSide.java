@@ -334,12 +334,13 @@ public class FXRequestServerSide extends FXRequestImpl
             while (n != null) {
 
                 String attrName =  n.getName().getLocalPart();
-                System.out.println("FXRequestServerSide:: extending context with : " + attrName);
+                /// System.out.println("FXRequestServerSide:: extending context with : " + attrName);
                 if (! attrName.equals("userID") &&
                     ! attrName.startsWith("xmlns")) {
                     if (! "{''}".equals(n.getData())) {
                         // new behavior resolves attribute expressions during extend context
-                        ctx.put(n.getName().getLocalPart(), FXContextImpl.parseAttributeExpr(n.getData(), parentContext));
+                        ctx.put(n.getName().getLocalPart(), 
+                                FXContextImpl.parseAttributeExpr(n.getData(), parentContext));
                     } else {
                         ctx.put(n.getName().getLocalPart(), n.getData());
                     }
@@ -347,8 +348,6 @@ public class FXRequestServerSide extends FXRequestImpl
                 n = atts.next();
             }
         }
-        
-
 
         // process context and paramset children, in order
         SafeNodeIterator nl = this.getNode().getChildren();

@@ -134,7 +134,7 @@ public class ConfigProps
         try {
             if (baseURL != null) {
                 filename = new URL(baseURL, filename).toString();
-//                System.out.println("configProps::URL from baseURL + filename" + filename);
+                System.out.println("configProps::URL from baseURL + filename" + filename);
             }
             
             url = new URL(filename);
@@ -145,7 +145,7 @@ public class ConfigProps
         // see if our class loader can find it
         if (url == null ) {
             url = (new ConfigProps()).getClass().getResource(filename);
-//            System.out.println("configProps::URL getclass + filename" + url.toString());
+            //            System.out.println("configProps::URL getclass + filename" + url.toString());
         } 
 
         return url;

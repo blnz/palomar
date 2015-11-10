@@ -12,8 +12,6 @@ import org.xml.sax.XMLFilter;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.EntityResolver;
-import org.xml.sax.DTDHandler;
-import org.xml.sax.ErrorHandler;
 
 import com.blnz.fxpl.xform.DownstreamProcessStatus;
 

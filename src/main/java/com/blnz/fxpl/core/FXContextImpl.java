@@ -1,6 +1,5 @@
 package com.blnz.fxpl.core;
 
-
 import com.blnz.fxpl.FXContext;
 import com.blnz.fxpl.FXException;
 import com.blnz.fxpl.FXHome;
@@ -8,11 +7,6 @@ import com.blnz.fxpl.FXRequest;
 
 import com.blnz.fxpl.util.ConfigProps;
 import com.blnz.fxpl.xform.XForm;
-
-import com.blnz.fxpl.xform.DOMWriter;
-
-import com.blnz.fxpl.expr.Expression;
-import com.blnz.fxpl.expr.XRExp;
 
 import com.blnz.xsl.om.Node;
 import com.blnz.xsl.om.NodeIterator;
@@ -31,7 +25,6 @@ import com.blnz.xsl.expr.StringVariant;
 import com.blnz.xsl.expr.VariableSet;
 import com.blnz.xsl.expr.VariantBase;
 import com.blnz.xsl.expr.Variant;
-
 
 import com.blnz.xsl.sax2.SAXTwoOMBuilder;
 
@@ -131,23 +124,7 @@ public class FXContextImpl
                     return "";
                 }
 		try {
-
 		    return parseAttributeExpr((String)value, this);
-//		    Expression exp = 
-//			XRExp.parseExpr(new StringReader((String)value));
-//
-//		    StringWriter sw = new StringWriter();
-//
-//		    // FIXME - can't pass in current context. it causes
-//		    // infinite loop when evaluating some expressions.
-//		    exp.eval(_parent, sw);
-//
-//		    // exp.eval(this, sw);
-//
-//		    String nval = sw.toString();
-//
-//		    return nval;
-
 		} catch (Throwable ex) {
 		    LOGGER.warning("Cannot parse context param expression {" + value + 
                                    "} with key {" + key  + "}");
@@ -165,24 +142,9 @@ public class FXContextImpl
         try {
             if (val.indexOf('{') >= 0) {
                 
-                    // FIXME:  this part, we need only do one time.
+                // FIXME:  this part, we need only do one time.
                 StringExpr expr = Expr2Parser.parseValueExpr( ((FXContextImpl)ctx).getNode(), val, ((FXContextImpl)ctx));
                 return expr.eval(ctx.getNode(), (FXContextImpl)ctx);
-//                Expression exp = 
-//                    XRExp.parseExpr(new StringReader((String)val));
-//                
-//                StringWriter sw = new StringWriter();
-//                
-//                // FIXME - can't pass in current context. it causes
-//                // infinite loop when evaluating some expressions.
-//                // but we should use the current context. fix it later.
-//                
-//                exp.eval(ctx, sw);
-//                // exp.eval(this, sw);
-//                
-//                String nval = sw.toString();
-
-//                return nval;
             } else {
                 return val;
             }

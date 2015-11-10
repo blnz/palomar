@@ -1,6 +1,4 @@
-
 package com.blnz.fxpl.xform;
-
 
 import com.blnz.xsl.tr.LoadContext;
 import com.blnz.fxpl.fs.RepositoryItem;
@@ -10,7 +8,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 
-
 import com.blnz.xsl.om.Node;
 import com.blnz.xsl.sax2.SAXTwoOMBuilder;
 
@@ -18,6 +15,7 @@ import javax.xml.transform.Source;
 
 import java.io.OutputStream;
 import java.io.Writer;
+
 /**
  * Service provider for XML transformation, parsing and serialization
  */
@@ -30,7 +28,7 @@ public class XForm
     public static int CHECK_NONE = 0;
 
     /**
-     * XMLReader validation configuration flag: well -formedness checking
+     * XMLReader validation configuration flag: well-formedness checking
      */
     public static int CHECK_WELL_FORMED = 1;
 
@@ -38,7 +36,6 @@ public class XForm
      * XMLReader validation configuration flag: schema validation
      */
     public static int CHECK_VALID = 2;
-
 
     private static TransformService _ts = null;
 
@@ -125,29 +122,6 @@ public class XForm
         return getTransformService().createJAXPTransformer(upstream, 
                                                            styleSheet); 
     }
-
-
-    // /**
-    //  * @return an ElementFilter which can be configured to
-    //  *  selectively remove elements from a SAX event stream
-    //  */
-    // public static final ElementFilter createElementFilter()
-    // { return getTransformService().createElementFilter(); }
-
-    // /**
-    //  * @return an ElementFilter which can be configured to
-    //  *  selectively remove attributes from a SAX event stream
-    //  */
-    // public static final ElementFilter createAttributesFilter(String attrNames)
-    // { return getTransformService().createAttributesFilter(attrNames); }
-
-//    /**
-//     * @return a compiled XSLT Transformation engine packaged as an 
-//     *  SAX2 XML Filter
-//     */
-//    public static final Transformer createCompiledTransformer()
-//        throws TransformException
-//    { return getTransformService().createCompiledTransformer(); }
 
     /**
      * @return a SAX  ContentHandler for writing XML
@@ -248,7 +222,6 @@ public class XForm
                 _ts = (TransformService) Class.forName(implName).newInstance();
             }
         } catch (Exception ex) {
-            // we just want to have a fallback logger, and continue
             _ts = new com.blnz.fxpl.xform.impl.BasicTransformServiceHomeImpl();
         }
     }

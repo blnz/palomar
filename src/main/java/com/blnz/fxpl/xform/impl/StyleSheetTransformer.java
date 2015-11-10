@@ -15,8 +15,7 @@ import com.blnz.xsl.sax2.SaxFilterMaker;
 import org.xml.sax.XMLReader;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.XMLReaderAdapter;
-import org.xml.sax.helpers.ParserAdapter;
-import org.xml.sax.Parser;
+
 import org.xml.sax.SAXParseException;
 import org.xml.sax.SAXException;
 import org.xml.sax.EntityResolver;
@@ -111,9 +110,6 @@ public class StyleSheetTransformer  extends TransformerImplBase implements Clone
             setXslProcessorParams(_params);
         }
         
-        // attach an output handler
-        // ParserAdapter pa = new ParserAdapter(_xslProcessor);
-        // pa.setContentHandler(this);
         setParent(_xslProcessor);
     }
     

@@ -6,7 +6,6 @@ import com.blnz.fxpl.xform.*;
 import com.blnz.fxpl.fs.RepositoryItem;
 import com.blnz.fxpl.core.SimpleElementFactory;
 
-
 import com.blnz.xsl.tr.LoadContext;
 
 import com.blnz.xsl.om.Node;
@@ -189,33 +188,6 @@ public class BasicTransformServiceHomeImpl implements TransformService
         return jt;
     }
 
-    // /**
-    //  * @return an ElementFilter which can be configured to
-    //  *  selectively remove elements from a SAX event stream
-    //  */
-    // public ElementFilter createElementFilter()
-    // { 
-    //     return new ElementFilterImpl();
-    // }
-
-    // /**
-    //  * @return an ElementFilter which can be configured to
-    //  *  selectively remove attributes from a SAX event stream
-    //  */
-    // public ElementFilter createAttributesFilter(String attrNames)
-    // { 
-    //     return new AttributeFilterImpl(attrNames); 
-    // }
-
-//    /**
-//     * @return a compiled XSLT Transformation engine packaged as an 
-//     *  SAX2 XML Filter
-//     */
-//    public Transformer createCompiledTransformer()
-//    {
-//        return new ClassTransformer();
-//    }
-
     /**
      * @return a SAX  ContentHandler for writing transformed
      *  output to a UTF-8 byte stream
@@ -264,16 +236,6 @@ public class BasicTransformServiceHomeImpl implements TransformService
         //        return new OutWriterContentHandler(w);
         return new XHTMLCharStreamSerializer(w);
     }
-
-    // /**
-    //  * @return a SAX  ContentHandler for writing transformed
-    //  *  output to a character Writer
-    //  */
-    // public ContentHandler createXPSMLContentWriter(Writer w)
-    // {
-    //     // FIXME: implement something
-    //     return new XPSMLWriterContentHandler(w);
-    // }
 
     /**
      * @return a SAX 2 XML Reader (parser) suitable for
@@ -468,16 +430,8 @@ public class BasicTransformServiceHomeImpl implements TransformService
 
             SAXTwoOMBuilder builder = omb.getConfiguredOMBuilder( "", 0, factory, new NameTableImpl());
             return builder;
-
-            // //DocumentBuilder db = _crimsonDocBuilderFact.newDocumentBuilder();
-            // DocumentBuilder db = new DomTargetBuilder();
-            // CrimsonDOMWriter cdw =  new CrimsonDOMWriter(db);
-
-            // ( (com.blnz.fxpl.dom.DocumentEx) cdw.getStartingDocument()).setElementFactory(factory);
-
-            // return cdw;
         } catch (Exception ex) {
-            // FIXME
+            // FIXME -- do something?
             ex.printStackTrace();
         }
         return null;

@@ -4,7 +4,6 @@ import com.blnz.fxpl.*;
 
 import com.blnz.fxpl.xform.XForm;
 import com.blnz.fxpl.xform.TransformException;
-import com.blnz.fxpl.xform.DOMWriter;
 
 import com.blnz.xsl.om.Node;
 import com.blnz.xsl.om.NodeExtension;

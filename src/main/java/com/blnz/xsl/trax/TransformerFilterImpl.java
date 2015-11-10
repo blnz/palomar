@@ -14,7 +14,7 @@ import com.blnz.xsl.sax2.XMLProcessorImpl;
 import org.xml.sax.InputSource;
 
 import org.xml.sax.helpers.XMLFilterImpl;
-import org.xml.sax.Parser;
+
 import org.xml.sax.SAXParseException;
 import org.xml.sax.SAXException;
 

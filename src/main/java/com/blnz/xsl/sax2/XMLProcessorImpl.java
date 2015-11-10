@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 import javax.xml.parsers.SAXParserFactory;
-import org.xml.sax.Parser;
+
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
-import org.xml.sax.DocumentHandler;
+
 import org.xml.sax.DTDHandler;
 import org.xml.sax.Locator;
-import org.xml.sax.AttributeList;
+
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.XMLReaderAdapter;
 import org.xml.sax.helpers.XMLFilterImpl;
