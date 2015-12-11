@@ -70,6 +70,15 @@ public class PalomarTest {
         assert("<foo xmlns=\"http://namespaces.blnz.com/fxpl\" a=\"1\"><bar b=\"2\"><baz/></bar></foo>".equals(result));
     }
     
+
+    @Test
+    public void testEvals() throws Exception {
+        for (int i = 0; i < evalTests.length ; ++i ) {
+            String result = evalString(parseString(evalTests[i][0]));
+            assert(evalTests[i][1].equals(result));
+        }
+    }
+
     private String parseString(String itxt)  throws Exception {
         char[] _buf = new char[1024];
         String result = null;
@@ -112,11 +121,12 @@ public class PalomarTest {
           "<foo xmlns=\"http://namespaces.blnz.com/fxpl\" a=\"1\"><bar b=\"2\"><baz/></bar></foo>" },
         { "foo(a='1'){bar(b='YABBA'){baz;}};", 
           "<foo xmlns=\"http://namespaces.blnz.com/fxpl\" a=\"1\"><bar b=\"YABBA\"><baz/></bar></foo>" },
-        { "itemPut(name='/foo.xml'){bar(b='YABBA'){baz;}};", 
+        { "itemPut(name='/foo.xml'){bar(b='YABBA' c='123'){baz;}};", 
           "<success xmlns=\"http://namespaces.blnz.com/fxpl\" name=\"/foo.xml\"/>" },
         { "foo(xmlns='' a='1'){bar(b='YABBA'){baz;}};", 
-          "<foo a=\"1\"><bar b=\"YABBA\"><baz/></bar></foo>" }
-
+          "<foo a=\"1\"><bar b=\"YABBA\"><baz/></bar></foo>" },
+        { "itemEval(name='src/test/fxpl/test.fx');",
+          "<success/>"}
     };
     
     /**

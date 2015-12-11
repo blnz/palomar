@@ -73,7 +73,7 @@ public interface Node extends SourceLocator
 
     
     /**
-     * in-scope namespaces ??
+     * in-scope namespaces 
      */
     NamespacePrefixMap getNamespacePrefixMap();
 

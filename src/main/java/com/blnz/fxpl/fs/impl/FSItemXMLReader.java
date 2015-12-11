@@ -125,7 +125,7 @@ public class FSItemXMLReader extends ParserAdapter
     private void retrieveFromFS()
         throws Exception
     {
-        if (_xsItem.getName().endsWith(".xpml")) {
+        if ((_xsItem.getName().endsWith(".xpml")) || (_xsItem.getName().endsWith(".fx"))) {
             InputStreamReader sr = new InputStreamReader(_xsItem.getInputStream());
             XPSMLReader xr = new XPSMLReader(sr);
 	    _inputSource = new InputSource(xr);

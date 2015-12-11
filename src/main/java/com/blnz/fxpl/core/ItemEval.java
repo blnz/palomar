@@ -103,6 +103,7 @@ public class ItemEval extends FXRequestServerSide
             }
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             LOGGER.severe(ex.toString());
             errorResponse(ex, responseTarget, ctx);
         }

@@ -26,8 +26,6 @@ package com.blnz.fxpl;
 
             FXContext context = econn.getExtendedContext();
             context.add("myKey", "myValue");
-            
-
 
 </code>
  */
@@ -37,20 +35,18 @@ public class FXHome
 
     private static FXConnectionFactory _cFact = null;
 
-
-
-    // nobody get's to use this
+    // nobody gets to use this private constructor
     private FXHome() {}
 
     /**
-     * The FX namespace is <code>http://namespaces.xmlecho.org/echo</code>
+     * The FX namespace is <code>http://namespaces.blnz.com/fxpl</code>
      */
     public static final String NAMESPACE = 
         "http://namespaces.blnz.com/fxpl";
 
     /**
      * The FX connection session 
-     *  namespace is <code>http://namespaces.xmlecho.org/echoSession</code>
+     *  namespace is <code>http://namespaces.blnz.com/fxpl-session</code>
      */
     public static final String SESSION_NAMESPACE = 
         "http://namespaces.blnz.com/fxpl-session";

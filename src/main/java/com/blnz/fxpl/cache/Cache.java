@@ -1,5 +1,3 @@
-// $Id: Cache.java 123 2005-04-09 19:47:03Z blindsey $
-
 package com.blnz.fxpl.cache;
 
 import com.blnz.fxpl.cron.Refreshable;

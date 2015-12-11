@@ -87,6 +87,7 @@ public class FXContextImpl
     {
         this();
         _parent = parent;
+        setNode(parent.getNode());
     }
 
     /**
@@ -442,12 +443,13 @@ public class FXContextImpl
         
         Node e = nl.next();
         while (e != null) {
-
+            System.out.println("stashParams:: next is " + e.getClass().getName());
             if (e.getType() == Node.ELEMENT) {
                 String tagName = e.getName().getLocalPart();
                 if ("param".equals(tagName) ||
                     "function".equals(tagName) ) {
-                    String name = e.getAttributeValue(name("name")); 
+                    Name nName = name("name");
+                    String name = e.getAttributeValue(nName); 
                     if (name != null && name.length() > 0) {
                         Object val = getParamBindingValue(e, this);
                         _impl.put(name, val);

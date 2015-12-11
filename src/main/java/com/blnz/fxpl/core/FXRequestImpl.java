@@ -23,7 +23,9 @@ public class FXRequestImpl
     private Node _node = null;
 
     public Node getNode() { return _node; }
-    public void setNode(Node n) { _node = n; }
+    public void setNode(Node n) { 
+        // System.out.println("setting _node");
+        _node = n; }
 
     /**
      * evaluate the request to an empty element.
@@ -65,7 +67,7 @@ public class FXRequestImpl
         return "internal";
     }
 
-    // FIXME:  I think we want to include the namespace prefix
+    // FIXME:  I think we might want to include the namespace prefix
     public String getTagName() 
     {
         return _node == null ? null : _node.getName().getLocalPart();
@@ -89,23 +91,23 @@ public class FXRequestImpl
     //  get our document's Name object for the given string
     public final Name name(String name)
     {
-        // Node n = this.getNode();
-        // if (n == null) {
-        //     System.out.println("FXRequestImpl::name() null node");
-        // }
+         Node n = this.getNode();
+         if (n == null) {
+             System.out.println("FXRequestImpl::name() null node");
+         }
 
-        // Name nname = n.getName();
-        // if (nname == null) {
-        //     System.out.println("FXRequestImpl::name() null nodename");
-        // }
+         Name nname = n.getName();
+         if (nname == null) {
+             System.out.println("FXRequestImpl::name() null nodename");
+         }
 
-        // NameTable nt = (NameTable) nname.getCreator();
-        // if (nt == null) {
-        //     System.out.println("FXRequestImpl::name() null nametable");
-        // }
+         NameTable nt = (NameTable) nname.getCreator();
+         if (nt == null) {
+             System.out.println("FXRequestImpl::name() null nametable");
+         }
 
-
-        return ((NameTable) this.getNode().getName().getCreator()).createName(name);
+         return nt.createName(name);
+         // return ((NameTable) this.getNode().getName().getCreator()).createName(name);
     }
 
 

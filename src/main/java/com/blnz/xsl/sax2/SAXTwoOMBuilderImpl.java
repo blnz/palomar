@@ -153,7 +153,7 @@ public class SAXTwoOMBuilderImpl implements SAXTwoOMBuilder
         } catch (XSLException e) {
             throw new SAXException(e);
         }
-
+        ne.setNode(element);
         _currentIndex += atts.getLength();
         _currentNode = element;
         _pendingNamespaces.clear();

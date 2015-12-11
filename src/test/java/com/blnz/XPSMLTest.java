@@ -58,6 +58,7 @@ public class XPSMLTest {
         System.out.println(txt);
         assert("<foo a='1' ><bar b='2' ><baz/></bar></foo>".equals(txt));
     }
+
     
     /**
      * Positive test for something
